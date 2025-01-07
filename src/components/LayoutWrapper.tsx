@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { MdOutlineLightMode, MdOutlineDarkMode, MdOutlineClose, MdMenu } from "react-icons/md";
 import { THEME } from '@/constants/const/theme'
-import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from '@/constants/const/wrapper'
+import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST, IS_SERVER } from '@/constants/const/wrapper'
 import type { ThemeAttributesType, ThemeNameType } from '@/constants/types/theme'
 
 const Wrapper = styled.div<{ $theme: ThemeAttributesType }>`
@@ -104,19 +104,6 @@ const ModeSwitchBlock = styled.div<{ $theme: ThemeAttributesType }>`
   cursor: pointer;
 `
 
-const MenuIconImage = styled.img.attrs(props => ({
-  src: props.src.src
-}))`
-  padding: 2px;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  transition: color 0.3s ease, color 0.3s ease;
-  &:first-child {
-    margin-right: 8px;
-  }
-  `
-
 const BlogName = styled.div`
   text-align: center;
   border-top: 1px solid gray;
@@ -167,7 +154,7 @@ export default function LayoutWrapper({
     children: React.ReactNode
   }) {
     const pathname = usePathname()
-    const localModeName = localStorage.getItem('edward_blog_mode') as ThemeNameType || 'light'
+    const localModeName = IS_SERVER ? 'light' : localStorage.getItem('edward_blog_mode') as ThemeNameType || 'light'
 
     const [themeName, setThemeName] = useState<ThemeNameType>(localModeName)
     const [theme, setTheme] = useState<ThemeAttributesType>(THEME[themeName])
