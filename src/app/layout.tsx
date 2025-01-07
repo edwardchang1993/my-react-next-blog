@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Varela_Round } from '@next/font/google';
+import { Varela_Round } from "next/font/google";
 import '@/assets/styles/globals.css'
 import LayoutWrapper from '@/components/LayoutWrapper'
 
