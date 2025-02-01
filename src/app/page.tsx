@@ -1,7 +1,12 @@
+"use client";
+
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return (
-    <div>
-      Home
-    </div>
-  );
+  useEffect(() => {
+    redirect("/blog");
+  }, []);
+
+  return <div>Home</div>;
 }

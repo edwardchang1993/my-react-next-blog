@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 import { Varela_Round } from "next/font/google";
-import '@/assets/styles/globals.css'
-import LayoutWrapper from '@/components/LayoutWrapper'
+import "@/assets/styles/globals.scss";
+import "@/assets/styles/tiptap.scss";
+import LayoutWrapper from "@/components/LayoutWrapper/index";
 
 export const metadata: Metadata = {
   title: "Edward Chang's Blog",
   description: "A Frontend Engineer",
+  alternates: {
+    canonical: "https://edwardchang.blog/",
+  },
 };
 
 const varelaRound = Varela_Round({
-  weight: '400', // Adjust weight if necessary
-  subsets: ['latin'], // Include the required subsets (e.g., 'latin')
-  display: 'swap', // Optional, ensures better font rendering
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -22,9 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={varelaRound.className}>
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
