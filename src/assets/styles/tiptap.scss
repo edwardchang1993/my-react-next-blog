@@ -1,14 +1,19 @@
 .tiptap {
-  .ProseMirror:focus {
+  &.ProseMirror.ProseMirror-focused {
     outline: none;
     border: 1px #994639 solid;
+  }
+
+  p {
+    line-height: 1.5;
   }
 
   /* List styles */
   ul,
   ol {
     padding: 0 1rem;
-    margin: 1.25rem 1rem 1.25rem 0.4rem;
+    // margin: 1.25rem 1rem 1.25rem 0.4rem;
+    margin: 0.4rem;
 
     li p {
       margin-top: 0.25em;
@@ -23,8 +28,9 @@
   h4,
   h5,
   h6 {
-    line-height: 1.1;
-    margin-top: 2.5rem;
+    // line-height: 1.1;
+    line-height: 1.25;
+    // margin-top: 2.5rem;
     text-wrap: pretty;
   }
 
@@ -97,7 +103,6 @@
   flex-direction: column;
   gap: 6px;
   margin-bottom: 16px;
-  // padding: 1.5rem;
 }
 .tiptap-menu-button-group {
   display: flex;
