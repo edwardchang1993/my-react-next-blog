@@ -8,13 +8,14 @@ import { db } from "@/sdk/firebase";
 import FullScreenLoading from "@/components/FullscreenLoading";
 import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
+import SubmitButton from "@/components/SubmitButton";
 import type { ThemeAttributesType } from "@/types/theme";
 import type {
   EditionDataType,
-  EditionDataEditionContent,
-  EditionDataEditionName,
-  EditionDataEditionTag,
-  EditionDataEditionTagList,
+  EditionDataEditionContentType,
+  EditionDataEditionNameType,
+  EditionDataEditionTagType,
+  EditionDataEditionTagListType,
 } from "@/types/editor";
 import { DEFAULT_EDITOR_CONTENT } from "@/constants/editor";
 
@@ -60,24 +61,6 @@ const NewEditionTiptapFooter = styled.div`
   margin-top: 24px;
 `;
 
-const SubmitButton = styled.button<{ $theme: ThemeAttributesType }>`
-  border-radius: 10px;
-  padding: 6px 12px;
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 500;
-  margin-left: auto;
-  cursor: pointer;
-  color: ${(props) => props.$theme.text};
-  background-color: ${(props) => props.$theme.background};
-  border: 1px ${(props) => props.$theme.text} solid;
-  transition: background-color 0.3s ease, color 0.3s ease;
-
-  &:hover {
-    background-color: ${(props) => props.$theme.buttonHoverBackground};
-  }
-`;
-
 const SubTitle = styled.div`
   font-size: 32px;
   line-height: 32px;
@@ -92,14 +75,14 @@ const SubTitle = styled.div`
 export default function NewAEditionPage() {
   const theme = useTheme();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [editorContent, setEditorContent] = useState<EditionDataEditionContent>(
-    DEFAULT_EDITOR_CONTENT
-  );
-  const [editionName, setEditionName] = useState<EditionDataEditionName>("");
+  const [editorContent, setEditorContent] =
+    useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
+  const [editionName, setEditionName] =
+    useState<EditionDataEditionNameType>("");
   const [editionTagList, setEditionTagList] =
-    useState<EditionDataEditionTagList>([]);
+    useState<EditionDataEditionTagListType>([]);
   const [newEditionTagName, setNewEditionTagName] =
-    useState<EditionDataEditionTag>("");
+    useState<EditionDataEditionTagType>("");
 
   function handleUpdateEditionName(e: React.ChangeEvent<HTMLInputElement>) {
     setEditionName(e.currentTarget.value);
@@ -203,9 +186,7 @@ export default function NewAEditionPage() {
           <EditionTagList editionTagList={editionTagList} />
         </div>
         <NewEditionTiptapFooter>
-          <SubmitButton $theme={theme} onClick={submit}>
-            送出
-          </SubmitButton>
+          <SubmitButton label="送出" onClick={submit} />
         </NewEditionTiptapFooter>
         <Toaster />
         <FullScreenLoading isLoading={isLoading} />

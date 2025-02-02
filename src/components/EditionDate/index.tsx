@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { DISPLAY_DAY_LIST, DISPLAY_MONTH_LIST } from "./constants";
-import type { EditionDataCreateTimestamp } from "@/types/editor";
+import type { EditionDataCreateTimestampType } from "@/types/editor";
 import type { EditionDatePropsType } from "./types";
 
 const EditionDateComponent = styled.span`
@@ -10,7 +10,7 @@ const EditionDateComponent = styled.span`
   color: #6941c6;
 `;
 
-function getDateFromTimestamp(timestamp: EditionDataCreateTimestamp) {
+function getDateFromTimestamp(timestamp: EditionDataCreateTimestampType) {
   const date = new Date(timestamp);
   const day = DISPLAY_DAY_LIST[date.getUTCDay()];
   const dateNumber = date.getUTCDate();

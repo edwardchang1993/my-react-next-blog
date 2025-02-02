@@ -1,6 +1,6 @@
-import type { EditionDataEditionName } from "@/types/editor";
+import type { EditionDataEditionNameType } from "@/types/editor";
 
 export interface EditionNamePropsType {
-  editionName: EditionDataEditionName;
+  editionName: EditionDataEditionNameType;
   redirectToEdition: Function;
 }

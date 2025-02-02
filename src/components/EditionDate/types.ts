@@ -1,5 +1,5 @@
-import type { EditionDataCreateTimestamp } from "@/types/editor";
+import type { EditionDataCreateTimestampType } from "@/types/editor";
 
 export interface EditionDatePropsType {
-  timestamp: EditionDataCreateTimestamp;
+  timestamp: EditionDataCreateTimestampType;
 }

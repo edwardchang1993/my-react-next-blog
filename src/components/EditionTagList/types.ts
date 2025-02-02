@@ -1,5 +1,5 @@
-import type { EditionDataEditionTagList } from "@/types/editor";
+import type { EditionDataEditionTagListType } from "@/types/editor";
 
 export interface EditionTagListPropsType {
-  editionTagList: EditionDataEditionTagList;
+  editionTagList: EditionDataEditionTagListType;
 }

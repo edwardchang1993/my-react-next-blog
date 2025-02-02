@@ -8,13 +8,16 @@ import EditionDate from "@/components/EditionDate";
 import EditionName from "@/components/EditionName";
 import EditionContentPreview from "@/components/EditorContentPreview";
 import EditionTagList from "@/components/EditionTagList";
-import type { EditionDataType, EditionDataId } from "@/types/editor";
+import type {
+  EditionDataType,
+  FirestoreCollectionIdType,
+} from "@/types/editor";
 
 export default function SingleEditionPage() {
   const searchParams = useSearchParams();
   const [editionData, setEditionData] = useState<EditionDataType | null>(null);
 
-  const fetchSingleDocument = async (id: EditionDataId) => {
+  const fetchSingleDocument = async (id: FirestoreCollectionIdType) => {
     const docRef = doc(db, "edition_list", id);
     const docSnap = await getDoc(docRef);
 
@@ -26,7 +29,9 @@ export default function SingleEditionPage() {
   };
 
   useEffect(() => {
-    fetchSingleDocument(searchParams.get("editionId") as EditionDataId);
+    fetchSingleDocument(
+      searchParams.get("editionId") as FirestoreCollectionIdType
+    );
   }, []);
 
   if (!editionData) {

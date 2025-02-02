@@ -1,14 +1,23 @@
-export type EditionDataId = string;
-export type EditionDataCreateTimestamp = number;
-export type EditionDataEditionContent = string;
-export type EditionDataEditionName = string;
-export type EditionDataEditionTag = string;
-export type EditionDataEditionTagList = EditionDataEditionTag[];
+export type FirestoreCollectionIdType = string;
+
+export type EditionDataCreateTimestampType = number;
+export type EditionDataEditionContentType = string;
+export type EditionDataEditionNameType = string;
+export type EditionDataEditionTagType = string;
+export type EditionDataEditionTagListType = EditionDataEditionTagType[];
 
 export interface EditionDataType {
-  id: EditionDataId;
-  create_timestamp: EditionDataCreateTimestamp;
-  edition_content: EditionDataEditionContent;
-  edition_name: EditionDataEditionName;
-  edition_tag_list: EditionDataEditionTagList;
+  id: FirestoreCollectionIdType;
+  create_timestamp: EditionDataCreateTimestampType;
+  edition_content: EditionDataEditionContentType;
+  edition_name: EditionDataEditionNameType;
+  edition_tag_list: EditionDataEditionTagListType;
+}
+
+export type AboutMeDataUpdateTimestampType = number;
+export type AboutMeDataContentType = string;
+
+export interface AboutMeDataType {
+  update_timestamp: AboutMeDataUpdateTimestampType;
+  about_me_content: AboutMeDataContentType;
 }

@@ -1,7 +1,7 @@
-import type { EditionDataEditionContent } from "@/types/editor";
+import type { EditionDataEditionContentType } from "@/types/editor";
 
 export interface EditorContentPreviewPropsType {
-  editionContent: EditionDataEditionContent;
+  editionContent: EditionDataEditionContentType;
   hasReadMore: boolean;
   redirectToEdition: Function;
 }
