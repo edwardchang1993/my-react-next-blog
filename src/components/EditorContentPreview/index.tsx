@@ -33,6 +33,7 @@ export default function EditorContentPreview(
     shouldRerenderOnTransaction: false,
     editable: false,
     content: props.editionContent,
+    immediatelyRender: false,
     extensions: [StarterKit],
   });
   const [isNeedReadMore, setIsNeedReadMore] = useState<boolean>(false);
