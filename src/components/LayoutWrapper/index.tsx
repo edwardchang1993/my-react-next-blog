@@ -10,9 +10,11 @@ import {
   MdOutlineClose,
   MdMenu,
 } from "react-icons/md";
+import GoogleLoginButton from "./components/GoogleLoginButton";
 import { THEME } from "@/constants/theme";
 import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from "@/constants/wrapper";
 import type { ThemeAttributesType, ThemeNameType } from "@/types/theme";
+import { useGoogleAuth } from "@/context/GoogleAuthContext";
 
 const Wrapper = styled.div<{ $theme: ThemeAttributesType }>`
   width: 100%;
@@ -174,6 +176,7 @@ export default function LayoutWrapper({
   const [theme, setTheme] = useState<ThemeAttributesType>(THEME[themeName]);
   const [menuSreenMask, setMenuSreenMask] = useState<boolean>(false);
 
+  const { isScriptLoaded } = useGoogleAuth();
   const size = useWindowSize();
 
   function useWindowSize() {
@@ -199,6 +202,7 @@ export default function LayoutWrapper({
 
       return () => window.removeEventListener("resize", handleResize);
     }, []);
+
     return windowSize;
   }
 
@@ -259,6 +263,14 @@ export default function LayoutWrapper({
                     }
                   />
                 </ModeSwitchBlock>
+                {isScriptLoaded ? (
+                  <GoogleLoginButton
+                    id="google-signin-button"
+                    customStyle={{ marginLeft: "8px" }}
+                  />
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <MdMenu
@@ -269,7 +281,7 @@ export default function LayoutWrapper({
               />
             )}
           </BannerNavigation>
-          {/* <BlogName>MY BLOG</BlogName> */}
+          <BlogName>MY BLOG</BlogName>
         </Banner>
         <Container>{children}</Container>
         <MenuScreenMask
@@ -317,6 +329,14 @@ export default function LayoutWrapper({
               }
             />
           </ModeSwitchBlockInMenuMask>
+          {isScriptLoaded ? (
+            <GoogleLoginButton
+              id="mask-google-signin-button"
+              customStyle={{ marginTop: "20px" }}
+            />
+          ) : (
+            <></>
+          )}
           <MdOutlineClose
             color={theme.text}
             size={24}

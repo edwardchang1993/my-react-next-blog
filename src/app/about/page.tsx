@@ -5,6 +5,7 @@ import { styled } from "styled-components";
 import toast, { Toaster } from "react-hot-toast";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
+import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
 import FullScreenLoading from "@/components/FullscreenLoading";
@@ -20,6 +21,9 @@ const AboutMeTiptapFooter = styled.div`
 export default function AboutMePage() {
   const collectionId = process.env
     .NEXT_PUBLIC_FIRESTORE_ABOUT_ME_COLLECTION_ID as string;
+
+  const { isAdmin } = useGoogleAuth();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirestoreDataLoaded, setIsFirestoreDataLoaded] =
     useState<boolean>(false);
@@ -85,17 +89,24 @@ export default function AboutMePage() {
             editionContent={originAboutMe}
             hasReadMore={false}
           />
-          <div style={{ padding: "16px 0" }} />
-          <TiptapContentEditor
-            editorContent={newAboutMe}
-            setEditorContent={setNewAboutMe}
-          />
+
+          {isAdmin ? (
+            <>
+              <div style={{ padding: "16px 0" }} />
+              <TiptapContentEditor
+                editorContent={newAboutMe}
+                setEditorContent={setNewAboutMe}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <></>
       )}
       <AboutMeTiptapFooter>
-        <SubmitButton label="儲存" onClick={submit} />
+        {isAdmin ? <SubmitButton label="儲存" onClick={submit} /> : <></>}
       </AboutMeTiptapFooter>
       <Toaster />
       <FullScreenLoading isLoading={isLoading} />

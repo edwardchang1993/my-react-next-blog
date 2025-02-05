@@ -3,6 +3,7 @@ import { Varela_Round } from "next/font/google";
 import "@/assets/styles/globals.scss";
 import "@/assets/styles/tiptap.scss";
 import LayoutWrapper from "@/components/LayoutWrapper/index";
+import { GoogleAuthProvider } from "@/context/GoogleAuthContext";
 
 export const metadata: Metadata = {
   title: "Edward Chang's Blog",
@@ -26,7 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={varelaRound.className}>
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <GoogleAuthProvider>
+          <LayoutWrapper>{children}</LayoutWrapper>
+        </GoogleAuthProvider>
       </body>
     </html>
   );

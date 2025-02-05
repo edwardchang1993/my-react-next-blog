@@ -5,6 +5,7 @@ import { styled, useTheme } from "styled-components";
 import { collection, addDoc } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { db } from "@/sdk/firebase";
+import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import FullScreenLoading from "@/components/FullscreenLoading";
 import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
@@ -74,6 +75,8 @@ const SubTitle = styled.div`
 
 export default function NewAEditionPage() {
   const theme = useTheme();
+  const { isAdmin } = useGoogleAuth();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editorContent, setEditorContent] =
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
@@ -127,6 +130,10 @@ export default function NewAEditionPage() {
     await addDoc(collection(db, "edition_list"), data);
 
     setIsLoading(false);
+  }
+
+  if (!isAdmin) {
+    return null;
   }
 
   return (
