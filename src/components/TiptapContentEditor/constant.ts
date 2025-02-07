@@ -2,7 +2,13 @@ import { useCurrentEditor } from "@tiptap/react";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
+import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
+import {
+  TiptapReplaceLinkToImageButtonOnClick,
+  TiptapReplaceLinkToImageButtonIsDisabled,
+  TiptapReplaceLinkToImageButtonClassName,
+} from "./utils";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
 
@@ -117,6 +123,12 @@ export const MENU_BUTTON_CONFIG_LIST = [
       editor?.isActive("codeBlock") ? "is-active" : "",
   },
   {
+    label: "Replace Link To Image",
+    onClick: TiptapReplaceLinkToImageButtonOnClick,
+    isDisabled: TiptapReplaceLinkToImageButtonIsDisabled,
+    className: TiptapReplaceLinkToImageButtonClassName,
+  },
+  {
     label: "Blockquote",
     onClick: (editor: EditorType) =>
       editor?.chain().focus().toggleBlockquote().run(),
@@ -172,6 +184,13 @@ export const TIPTAP_EXTENSIONS = [
     orderedList: {
       keepMarks: true,
       keepAttributes: false,
+    },
+  }),
+  Image.configure({
+    inline: true,
+    allowBase64: false,
+    HTMLAttributes: {
+      class: "tiptap-default-image",
     },
   }),
 ];

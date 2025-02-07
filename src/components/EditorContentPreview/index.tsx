@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { EditorContentPreviewPropsType } from "./types";
+import { TIPTAP_EXTENSIONS } from "./constants";
 
 const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
   display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
@@ -34,7 +35,7 @@ export default function EditorContentPreview(
     editable: false,
     content: props.editionContent,
     immediatelyRender: false,
-    extensions: [StarterKit],
+    extensions: TIPTAP_EXTENSIONS,
   });
   const [isNeedReadMore, setIsNeedReadMore] = useState<boolean>(false);
 
