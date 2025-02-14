@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { styled, useTheme } from "styled-components";
 import { collection, addDoc } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
@@ -10,6 +11,8 @@ import FullScreenLoading from "@/components/FullscreenLoading";
 import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
+import Title from "@/components/Title";
+import SubTitle from "@/components/SubTitle";
 import type { ThemeAttributesType } from "@/types/theme";
 import type {
   EditionDataType,
@@ -20,18 +23,8 @@ import type {
 } from "@/types/editor";
 import { DEFAULT_EDITOR_CONTENT } from "@/constants/editor";
 
-const NewEditionLabel = styled.div`
-  font-size: 16px;
-  line-height: 16px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  &:not(:first-child) {
-    margin-top: 16px;
-  }
-`;
-
 const NewEditionInput = styled.input<{ $theme: ThemeAttributesType }>`
+  width: -webkit-fill-available;
   background-color: inherit;
   border-radius: 10px;
   font-size: 16px;
@@ -60,17 +53,6 @@ const NewEditionTiptapFooter = styled.div`
   display: flex;
   align-items: center;
   margin-top: 24px;
-`;
-
-const SubTitle = styled.div`
-  font-size: 32px;
-  line-height: 32px;
-  margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  &:not(:first-child) {
-    margin-top: 32px;
-  }
 `;
 
 export default function NewAEditionPage() {
@@ -113,10 +95,10 @@ export default function NewAEditionPage() {
       return;
     }
 
-    if (!editionTagList.length) {
-      toast.error("請填入至少一個標籤");
-      return;
-    }
+    // if (!editionTagList.length) {
+    //   toast.error("請填入至少一個標籤");
+    //   return;
+    // }
 
     const data = {
       create_timestamp: new Date().getTime(),
@@ -138,42 +120,29 @@ export default function NewAEditionPage() {
 
   return (
     <>
-      <SubTitle>
-        <img
+      <Title>
+        <Image
           src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f4dd.png"
+          alt="new-a-edition-icon"
+          width={32}
           height={32}
         />
         &thinsp;New a Edition
-      </SubTitle>
+      </Title>
       <NewEditionTiptapWrapper $theme={theme}>
-        <NewEditionLabel>
-          <img
-            src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f538.png"
-            width={20}
-            height={20}
-          />
-          &thinsp;Name
-        </NewEditionLabel>
+        <SubTitle>Name</SubTitle>
         <NewEditionInput
           $theme={theme}
           type="text"
           value={editionName}
           onInput={handleUpdateEditionName}
         />
-        <NewEditionLabel>
-          {" "}
-          <img
-            src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f538.png"
-            width={20}
-            height={20}
-          />
-          &thinsp;Content
-        </NewEditionLabel>
+        <SubTitle>Content</SubTitle>
         <TiptapContentEditor
           editorContent={editorContent}
           setEditorContent={setEditorContent}
         />
-        <NewEditionLabel>
+        {/* <SubTitle>
           {" "}
           <img
             src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f538.png"
@@ -181,14 +150,14 @@ export default function NewAEditionPage() {
             height={20}
           />
           &thinsp;Tags
-        </NewEditionLabel>
+        </SubTitle>
         <NewEditionInput
           $theme={theme}
           type="text"
           value={newEditionTagName}
           onInput={handleUpdateEditionTagName}
           onKeyDown={handleUpdateEditionTag}
-        />
+        /> */}
         <div style={{ marginTop: "16px" }}>
           <EditionTagList editionTagList={editionTagList} />
         </div>
