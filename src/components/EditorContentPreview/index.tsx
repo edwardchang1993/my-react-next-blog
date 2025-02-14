@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import type { EditorContentPreviewPropsType } from "./types";
-import { TIPTAP_EXTENSIONS } from "./constants";
+import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/constant";
 
 const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
   display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
