@@ -8,29 +8,18 @@ import { styled, useTheme } from "styled-components";
 import EditionDate from "@/components/EditionDate";
 import EditionName from "@/components/EditionName";
 import EditionContentPreview from "@/components/EditorContentPreview";
-import EditionTagList from "@/components/EditionTagList";
+// import EditionTagList from "@/components/EditionTagList";
+import Title from "@/components/Title";
 import type { ThemeAttributesType } from "@/types/theme";
-import type { EditionDataType, EditionDataId } from "@/types/editor";
+import type {
+  EditionDataType,
+  FirestoreCollectionIdType,
+} from "@/types/editor";
 
 const BlogEditionItem = styled.div<{ $theme: ThemeAttributesType }>`
   padding: 12px 0;
   border-bottom: 1px ${(props) => props.$theme.text} solid;
   margin-bottom: 32px;
-`;
-
-const SubTitle = styled.div.attrs({
-  className: "ellipsis",
-})`
-  font-size: 24px;
-  height: 32px;
-  line-height: 32px;
-  margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-
-  &:not(:first-child) {
-    margin-top: 32px;
-  }
 `;
 
 export default function BlogPage() {
@@ -49,7 +38,7 @@ export default function BlogPage() {
     });
   }
 
-  function redirectToEdition(id: EditionDataId) {
+  function redirectToEdition(id: FirestoreCollectionIdType) {
     router.push(`/single-edition/?editionId=${id}`);
   }
 
@@ -63,14 +52,7 @@ export default function BlogPage() {
 
   return (
     <div>
-      <SubTitle>
-        <img
-          src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f5d2.png"
-          width={32}
-          height={32}
-        />
-        &thinsp;Recent blog posts
-      </SubTitle>
+      <Title>Recent blog posts</Title>
       {editionList.map((edition, index) => {
         return (
           <BlogEditionItem key={index} $theme={theme}>
@@ -84,7 +66,7 @@ export default function BlogPage() {
               hasReadMore={true}
               redirectToEdition={() => redirectToEdition(edition.id)}
             />
-            <EditionTagList editionTagList={edition.edition_tag_list} />
+            {/* <EditionTagList editionTagList={edition.edition_tag_list} /> */}
           </BlogEditionItem>
         );
       })}

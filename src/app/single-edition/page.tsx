@@ -7,7 +7,7 @@ import { db } from "@/sdk/firebase";
 import EditionDate from "@/components/EditionDate";
 import EditionName from "@/components/EditionName";
 import EditionContentPreview from "@/components/EditorContentPreview";
-import EditionTagList from "@/components/EditionTagList";
+// import EditionTagList from "@/components/EditionTagList";
 import type {
   EditionDataType,
   FirestoreCollectionIdType,
@@ -46,7 +46,7 @@ export default function SingleEditionPage() {
         editionContent={editionData.edition_content}
         hasReadMore={false}
       />
-      <EditionTagList editionTagList={editionData.edition_tag_list} />
+      {/* <EditionTagList editionTagList={editionData.edition_tag_list} /> */}
     </>
   );
 }

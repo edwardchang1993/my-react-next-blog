@@ -8,18 +8,18 @@ import toast, { Toaster } from "react-hot-toast";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import FullScreenLoading from "@/components/FullscreenLoading";
-import EditionTagList from "@/components/EditionTagList";
+// import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
 import Title from "@/components/Title";
 import SubTitle from "@/components/SubTitle";
 import type { ThemeAttributesType } from "@/types/theme";
 import type {
-  EditionDataType,
+  // EditionDataType,
   EditionDataEditionContentType,
   EditionDataEditionNameType,
-  EditionDataEditionTagType,
-  EditionDataEditionTagListType,
+  // EditionDataEditionTagType,
+  // EditionDataEditionTagListType,
 } from "@/types/editor";
 import { DEFAULT_EDITOR_CONTENT } from "@/constants/editor";
 
@@ -64,25 +64,25 @@ export default function NewAEditionPage() {
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
   const [editionName, setEditionName] =
     useState<EditionDataEditionNameType>("");
-  const [editionTagList, setEditionTagList] =
-    useState<EditionDataEditionTagListType>([]);
-  const [newEditionTagName, setNewEditionTagName] =
-    useState<EditionDataEditionTagType>("");
+  // const [editionTagList, setEditionTagList] =
+  //   useState<EditionDataEditionTagListType>([]);
+  // const [newEditionTagName, setNewEditionTagName] =
+  //   useState<EditionDataEditionTagType>("");
 
   function handleUpdateEditionName(e: React.ChangeEvent<HTMLInputElement>) {
     setEditionName(e.currentTarget.value);
   }
 
-  function handleUpdateEditionTagName(e: React.ChangeEvent<HTMLInputElement>) {
-    setNewEditionTagName(e.currentTarget.value);
-  }
+  // function handleUpdateEditionTagName(e: React.ChangeEvent<HTMLInputElement>) {
+  //   setNewEditionTagName(e.currentTarget.value);
+  // }
 
-  function handleUpdateEditionTag(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "Enter") {
-      setEditionTagList([...editionTagList, newEditionTagName]);
-      setNewEditionTagName("");
-    }
-  }
+  // function handleUpdateEditionTag(e: React.KeyboardEvent<HTMLInputElement>) {
+  //   if (e.key === "Enter") {
+  //     setEditionTagList([...editionTagList, newEditionTagName]);
+  //     setNewEditionTagName("");
+  //   }
+  // }
 
   async function submit() {
     if (!editionName) {
@@ -104,8 +104,8 @@ export default function NewAEditionPage() {
       create_timestamp: new Date().getTime(),
       edition_content: editorContent,
       edition_name: editionName,
-      edition_tag_list: editionTagList,
-    } as EditionDataType;
+      // edition_tag_list: editionTagList,
+    };
 
     setIsLoading(true);
 
@@ -158,9 +158,9 @@ export default function NewAEditionPage() {
           onInput={handleUpdateEditionTagName}
           onKeyDown={handleUpdateEditionTag}
         /> */}
-        <div style={{ marginTop: "16px" }}>
+        {/* <div style={{ marginTop: "16px" }}>
           <EditionTagList editionTagList={editionTagList} />
-        </div>
+        </div> */}
         <NewEditionTiptapFooter>
           <SubmitButton label="送出" onClick={submit} />
         </NewEditionTiptapFooter>
