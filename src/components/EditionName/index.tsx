@@ -2,9 +2,12 @@ import { styled, useTheme } from "styled-components";
 import type { ThemeAttributesType } from "@/types/theme";
 import type { EditionNamePropsType } from "./types";
 
-const EditionNameComponent = styled.div<{ $theme: ThemeAttributesType }>`
-  font-size: 32px;
-  line-height: 32px;
+const EditionNameComponent = styled.div.attrs({
+  className: "ellipsis",
+})<{ $theme: ThemeAttributesType }>`
+  font-size: 1.5rem;
+  line-height: 2rem;
+  height: 2rem;
   font-weight: 700;
   margin-top: 12px;
   cursor: pointer;

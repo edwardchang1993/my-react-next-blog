@@ -4,7 +4,7 @@ import type { SubmitButtonPropsTypes, SubmitButtonOnClickType } from "./types";
 
 const SubmitButtonComponent = styled.button<{ $theme: ThemeAttributesType }>`
   border-radius: 10px;
-  padding: 6px 12px;
+  padding: 10px 32px;
   font-size: 16px;
   line-height: 16px;
   font-weight: 500;
@@ -12,7 +12,7 @@ const SubmitButtonComponent = styled.button<{ $theme: ThemeAttributesType }>`
   cursor: pointer;
   color: ${(props) => props.$theme.text};
   background-color: ${(props) => props.$theme.background};
-  border: 1px ${(props) => props.$theme.text} solid;
+  border: 2px ${(props) => props.$theme.text} solid;
   transition: background-color 0.3s ease, color 0.3s ease;
 
   &:hover {

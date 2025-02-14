@@ -1,3 +1,4 @@
+import { Varela_Round } from "next/font/google";
 import ClientLayout from "@/components/ClientLayout";
 
 export const metadata = {
@@ -28,6 +29,12 @@ export const metadata = {
   },
 };
 
+const varelaRound = Varela_Round({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={varelaRound.className}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

@@ -25,24 +25,27 @@ const Wrapper = styled.div<{ $theme: ThemeAttributesType }>`
   transition: background-color 0.3s ease, color 0.3s ease;
 `;
 
-const Banner = styled.div`
-  padding: 30px 10%;
+const Header = styled.div<{ $theme: ThemeAttributesType }>`
+  padding-top: 30px;
+  padding-bottom: 8px;
+  margin: 0 10%;
+  border-bottom: 1px solid ${(props) => props.$theme.text};
+
   @media (max-width: 768px) {
-    padding: 30px 0px;
+    margin: 0;
   }
 `;
 
 const Container = styled.div`
   padding: 30px 10%;
+  min-height: calc(100% - 200px - 60px);
+
   @media (max-width: 768px) {
     padding: 30px 5%;
   }
 `;
 
 const BannerNavigation = styled.div<{ $theme: ThemeAttributesType }>`
-  position: sticky;
-  left: 0;
-  top: 0;
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -59,7 +62,7 @@ const BannerNavigateItem = styled.div<{ $theme: ThemeAttributesType }>`
   position: relative;
   font-size: 20px;
   line-height: 60px;
-  padding: 0 16px;
+  margin: 0 16px;
   & > a {
     color: ${(props) => props.$theme.text};
     text-decoration: unset;
@@ -106,6 +109,9 @@ const BlogUserName = styled.span`
   line-height: 60px;
   font-weight: bold;
   margin-right: auto;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const ModeSwitchBlock = styled.div<{ $theme: ThemeAttributesType }>`
@@ -116,26 +122,6 @@ const ModeSwitchBlock = styled.div<{ $theme: ThemeAttributesType }>`
   border-radius: 20px;
   margin-left: 16px;
   cursor: pointer;
-`;
-
-const BlogName = styled.div`
-  text-align: center;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-  font-size: 140px;
-  line-height: 160px;
-  @media (max-width: 992px) {
-    font-size: 120px;
-    line-height: 140px;
-  }
-  @media (max-width: 768px) {
-    font-size: 100px;
-    line-height: 120px;
-  }
-  @media (max-width: 576px) {
-    font-size: 70px;
-    line-height: 90px;
-  }
 `;
 
 const MenuScreenMask = styled.div<{ $theme: ThemeAttributesType }>`
@@ -160,6 +146,19 @@ const BlogNameInMenuMask = styled(BlogUserName)`
 const ModeSwitchBlockInMenuMask = styled(ModeSwitchBlock)`
   margin-left: 0;
   margin-top: 20px;
+`;
+
+const Footer = styled.div<{ $theme: ThemeAttributesType }>`
+  padding: 30px 0;
+  margin: 0 10%;
+  border-top: 1px solid ${(props) => props.$theme.text};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    margin: 0;
+  }
 `;
 
 export default function LayoutWrapper({
@@ -216,7 +215,7 @@ export default function LayoutWrapper({
   return (
     <ThemeProvider theme={theme}>
       <Wrapper $theme={theme}>
-        <Banner>
+        <Header $theme={theme}>
           <BannerNavigation $theme={theme}>
             <BlogUserName>Edward's blog</BlogUserName>
             {size.width && size.width > 576 ? (
@@ -263,14 +262,6 @@ export default function LayoutWrapper({
                     }
                   />
                 </ModeSwitchBlock>
-                {isScriptLoaded ? (
-                  <GoogleLoginButton
-                    id="google-signin-button"
-                    customStyle={{ marginLeft: "8px" }}
-                  />
-                ) : (
-                  <></>
-                )}
               </>
             ) : (
               <MdMenu
@@ -281,8 +272,7 @@ export default function LayoutWrapper({
               />
             )}
           </BannerNavigation>
-          <BlogName>MY BLOG</BlogName>
-        </Banner>
+        </Header>
         <Container>{children}</Container>
         <MenuScreenMask
           $theme={theme}
@@ -348,6 +338,17 @@ export default function LayoutWrapper({
             }}
           />
         </MenuScreenMask>
+        <Footer $theme={theme}>
+          <span>© 2025 Edward Powered by Vercel</span>
+          {isScriptLoaded ? (
+            <GoogleLoginButton
+              id="google-signin-button"
+              customStyle={{ marginLeft: "8px" }}
+            />
+          ) : (
+            <></>
+          )}
+        </Footer>
       </Wrapper>
     </ThemeProvider>
   );
