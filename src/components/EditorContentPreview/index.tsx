@@ -47,12 +47,14 @@ export default function EditorContentPreview(
       return;
     }
 
-    if (contentRef.current) {
-      const maxHeight = maxLines * lineHeight;
-      const actualHeight = contentRef.current.scrollHeight;
+    setTimeout(() => {
+      if (contentRef.current) {
+        const maxHeight = maxLines * lineHeight;
+        const actualHeight = contentRef.current.scrollHeight;
 
-      setIsNeedReadMore(actualHeight > maxHeight);
-    }
+        setIsNeedReadMore(actualHeight > maxHeight);
+      }
+    }, 0);
   }, [props.hasReadMore]);
 
   useEffect(() => {
