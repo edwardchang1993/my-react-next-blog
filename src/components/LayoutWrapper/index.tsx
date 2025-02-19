@@ -167,7 +167,7 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [themeName, setThemeName] = useState<ThemeNameType>("light");
+  const [themeName, setThemeName] = useState<ThemeNameType>("dark");
   const [theme, setTheme] = useState<ThemeAttributesType>(THEME[themeName]);
   const [menuSreenMask, setMenuSreenMask] = useState<boolean>(false);
 
@@ -183,6 +183,10 @@ export default function LayoutWrapper({
       setThemeName(defaultMode);
     }
   }, []);
+
+  useEffect(() => {
+    setTheme(THEME[themeName]);
+  }, [themeName]);
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = useState<{
