@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
-const config = {
+module.exports = {
   siteUrl: "https://edwardchang.blog/",
   generateRobotsTxt: true, // 產生 robots.txt
   sitemapSize: 5000, // 可選，控制 sitemap 頁數
@@ -12,5 +12,3 @@ const config = {
     ],
   },
 };
-
-export default config;

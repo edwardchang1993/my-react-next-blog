@@ -1,13 +1,15 @@
 import React from "react";
 import { styled, useTheme } from "styled-components";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
-import { MENU_BUTTON_CONFIG_LIST, TIPTAP_EXTENSIONS } from "./constant";
+import { MENU_BUTTON_CONFIG_LIST, TIPTAP_EXTENSIONS } from "./constants";
 import type { ThemeAttributesType } from "@/types/theme";
 import type { TiptapContentEditorPropsTypes } from "./types";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
 
-const MenuButton = styled.button<{ $theme: ThemeAttributesType }>`
+const MenuButton = styled.button<{
+  $theme: ThemeAttributesType;
+}>`
   border-radius: 12px;
   margin: none;
   border: none;
@@ -46,9 +48,9 @@ const MenuBar = React.memo(function MenuBar() {
           <MenuButton
             key={button.label}
             $theme={theme}
+            className={button.className(editor)}
             onClick={() => button.onClick(editor)}
             disabled={button.isDisabled(editor)}
-            className={button.className(editor)}
           >
             {button.label}
           </MenuButton>

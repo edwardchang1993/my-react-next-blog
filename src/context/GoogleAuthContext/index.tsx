@@ -8,11 +8,11 @@ import {
   ReactNode,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-
-interface GoogleAuthContextType {
-  isAdmin: boolean;
-  isScriptLoaded: boolean;
-}
+import type {
+  GoogleAuthContextType,
+  GoogleLoginCallbackParamType,
+  GoogleLoginCredentialJWTDecodedType,
+} from "./types";
 
 const GoogleAuthContext = createContext<GoogleAuthContextType | undefined>(
   undefined
@@ -40,8 +40,10 @@ export function GoogleAuthProvider({ children }: { children: ReactNode }) {
     script.onload = () => {
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID as string;
 
-      const callback = (response: any) => {
-        const decoded = jwtDecode(response.credential) as any;
+      const callback = (response: GoogleLoginCallbackParamType) => {
+        const decoded = jwtDecode(
+          response.credential
+        ) as GoogleLoginCredentialJWTDecodedType;
         setIsAdmin(decoded.email === "s2995510@gmail.com");
       };
 

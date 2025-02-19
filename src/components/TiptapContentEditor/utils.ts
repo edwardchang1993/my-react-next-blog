@@ -1,3 +1,4 @@
+import { NodeSelection } from "prosemirror-state";
 import { useCurrentEditor } from "@tiptap/react";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
@@ -48,10 +49,10 @@ export function TiptapReplaceLinkToImageButtonIsDisabled(editor: EditorType) {
 
 export function TiptapReplaceLinkToImageButtonClassName(editor: EditorType) {
   if (!editor) {
-    return true;
+    return "";
   }
 
-  const selection = editor.state.selection;
+  const selection = editor.state.selection as NodeSelection;
 
   if (selection.node) {
     return selection.node.type.name === "image" ? "is-active" : "";
@@ -101,10 +102,10 @@ export function TiptapReplaceLinkToVideoButtonIsDisabled(editor: EditorType) {
 
 export function TiptapReplaceLinkToVideoButtonClassName(editor: EditorType) {
   if (!editor) {
-    return true;
+    return "";
   }
 
-  const selection = editor.state.selection;
+  const selection = editor.state.selection as NodeSelection;
 
   if (selection.node) {
     return selection.node.type.name === "video" ? "is-active" : "";

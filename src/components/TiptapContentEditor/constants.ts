@@ -1,7 +1,6 @@
 import { useCurrentEditor } from "@tiptap/react";
 import { Node } from "@tiptap/core";
 import { Color } from "@tiptap/extension-color";
-import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
@@ -13,10 +12,11 @@ import {
   TiptapReplaceLinkToVideoButtonIsDisabled,
   TiptapReplaceLinkToVideoButtonClassName,
 } from "./utils";
+import type { MenuConfigButtonItemType } from "./types";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
 
-export const MENU_BUTTON_CONFIG_LIST = [
+export const MENU_BUTTON_CONFIG_LIST: MenuConfigButtonItemType[] = [
   {
     label: "Bold",
     onClick: (editor: EditorType) => editor?.chain().focus().toggleBold().run(),
@@ -223,8 +223,8 @@ const videoNode = Node.create({
 });
 
 export const TIPTAP_EXTENSIONS = [
-  Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] }),
+  Color,
+  TextStyle,
   StarterKit.configure({
     bulletList: {
       keepMarks: true,

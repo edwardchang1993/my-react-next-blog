@@ -73,7 +73,7 @@ export default function AboutMePage() {
 
   useEffect(() => {
     fetchAboutMeDocument();
-  }, []);
+  });
 
   useEffect(() => {
     if (newAboutMe) {

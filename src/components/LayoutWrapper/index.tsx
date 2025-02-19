@@ -167,16 +167,22 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [themeName, setThemeName] = useState<ThemeNameType>(
-    localStorage.getItem("edward_blog_mode")
-      ? (localStorage.getItem("edward_blog_mode") as ThemeNameType)
-      : "light"
-  );
+  const [themeName, setThemeName] = useState<ThemeNameType>("light");
   const [theme, setTheme] = useState<ThemeAttributesType>(THEME[themeName]);
   const [menuSreenMask, setMenuSreenMask] = useState<boolean>(false);
 
   const { isScriptLoaded } = useGoogleAuth();
   const size = useWindowSize();
+
+  useEffect(() => {
+    const defaultMode = localStorage.getItem(
+      "edward_blog_mode"
+    ) as ThemeNameType;
+
+    if (defaultMode) {
+      setThemeName(defaultMode);
+    }
+  }, []);
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = useState<{
@@ -188,6 +194,10 @@ export default function LayoutWrapper({
     });
 
     useEffect(() => {
+      if (typeof window === "undefined") {
+        return;
+      }
+
       function handleResize() {
         setWindowSize({
           width: window.innerWidth,
@@ -217,7 +227,7 @@ export default function LayoutWrapper({
       <Wrapper $theme={theme}>
         <Header $theme={theme}>
           <BannerNavigation $theme={theme}>
-            <BlogUserName>Edward's blog</BlogUserName>
+            <BlogUserName>Edward&apos;s blog</BlogUserName>
             {size.width && size.width > 576 ? (
               <>
                 {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (

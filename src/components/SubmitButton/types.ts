@@ -1,5 +1,5 @@
 export type SubmitButtonLabel = string;
-export type SubmitButtonOnClickType = Function;
+export type SubmitButtonOnClickType = () => void;
 
 export interface SubmitButtonPropsTypes {
   label: SubmitButtonLabel;

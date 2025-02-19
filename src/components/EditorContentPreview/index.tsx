@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { styled } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
 import type { EditorContentPreviewPropsType } from "./types";
-import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/constant";
+import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/constants";
 
 const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
   display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
@@ -53,7 +53,7 @@ export default function EditorContentPreview(
 
       setIsNeedReadMore(actualHeight > maxHeight);
     }
-  });
+  }, [props.hasReadMore]);
 
   useEffect(() => {
     if (!editor) {
@@ -61,7 +61,7 @@ export default function EditorContentPreview(
     }
 
     editor.commands.setContent(props.editionContent);
-  }, [props.editionContent]);
+  }, [editor, props.editionContent]);
 
   function clickReadMoreButton() {
     if (props.redirectToEdition) {

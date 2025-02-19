@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
@@ -16,8 +16,11 @@ import type {
 export default function SingleEditionPage() {
   const searchParams = useSearchParams();
   const [editionData, setEditionData] = useState<EditionDataType | null>(null);
+  const editionId = searchParams.get(
+    "editionId"
+  ) as FirestoreCollectionIdType | null;
 
-  const fetchSingleDocument = async (id: FirestoreCollectionIdType) => {
+  async function fetchSingleDocument(id: FirestoreCollectionIdType) {
     const docRef = doc(db, "edition_list", id);
     const docSnap = await getDoc(docRef);
 
@@ -26,20 +29,24 @@ export default function SingleEditionPage() {
     } else {
       console.log("[docSnap not exists]", docSnap);
     }
-  };
+  }
 
   useEffect(() => {
+    if (!editionId) {
+      return;
+    }
+
     fetchSingleDocument(
       searchParams.get("editionId") as FirestoreCollectionIdType
     );
-  }, []);
+  }, [editionId, searchParams]);
 
   if (!editionData) {
     return null;
   }
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <EditionDate timestamp={editionData.create_timestamp} />
       <EditionName editionName={editionData.edition_name} />
       <EditionContentPreview
@@ -47,6 +54,6 @@ export default function SingleEditionPage() {
         hasReadMore={false}
       />
       {/* <EditionTagList editionTagList={editionData.edition_tag_list} /> */}
-    </>
+    </Suspense>
   );
 }
