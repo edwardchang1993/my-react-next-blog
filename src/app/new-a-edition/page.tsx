@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { styled, useTheme } from "styled-components";
 import { collection, addDoc } from "firebase/firestore";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import FullScreenLoading from "@/components/FullscreenLoading";
@@ -34,7 +34,7 @@ const NewEditionInput = styled.input<{ $theme: ThemeAttributesType }>`
   color: ${(props) => props.$theme.text};
   &:focus {
     outline: none;
-    border: 1px #994639 solid;
+    border: 1px var(--active-color) solid;
   }
 `;
 
@@ -164,7 +164,6 @@ export default function NewAEditionPage() {
         <NewEditionTiptapFooter>
           <SubmitButton label="送出" onClick={submit} />
         </NewEditionTiptapFooter>
-        <Toaster />
         <FullScreenLoading isLoading={isLoading} />
       </NewEditionTiptapWrapper>
     </>

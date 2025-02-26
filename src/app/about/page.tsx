@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
@@ -27,11 +27,16 @@ export default function AboutMePage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isFirestoreDataLoaded, setIsFirestoreDataLoaded] =
     useState<boolean>(false);
+  const [isFetchingAboutMe, setIsFetchingAboutMe] = useState<boolean>(false);
   const [originAboutMe, setOriginAboutMe] =
     useState<AboutMeDataContentType>("");
   const [newAboutMe, setNewAboutMe] = useState<AboutMeDataContentType>("");
 
   async function fetchAboutMeDocument() {
+    if (isFetchingAboutMe) {
+      return;
+    }
+
     const docRef = doc(db, "about_me", collectionId);
     const docSnap = await getDoc(docRef);
 
@@ -40,6 +45,7 @@ export default function AboutMePage() {
 
       setOriginAboutMe(aboutMeData.about_me_content);
       setNewAboutMe(aboutMeData.about_me_content);
+      setIsFetchingAboutMe(true);
     } else {
       console.log("[docSnap not exists]", docSnap);
     }
@@ -95,7 +101,7 @@ export default function AboutMePage() {
               <div style={{ padding: "16px 0" }} />
               <TiptapContentEditor
                 editorContent={newAboutMe}
-                setEditorContent={setNewAboutMe}
+                setEditorContent={(newContent) => setNewAboutMe(newContent)}
               />
             </>
           ) : (
@@ -108,7 +114,6 @@ export default function AboutMePage() {
       <AboutMeTiptapFooter>
         {isAdmin ? <SubmitButton label="儲存" onClick={submit} /> : <></>}
       </AboutMeTiptapFooter>
-      <Toaster />
       <FullScreenLoading isLoading={isLoading} />
     </>
   );

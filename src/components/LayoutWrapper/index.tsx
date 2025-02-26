@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { styled, ThemeProvider } from "styled-components";
+import { styled, ThemeProvider, createGlobalStyle } from "styled-components";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,11 +10,20 @@ import {
   MdOutlineClose,
   MdMenu,
 } from "react-icons/md";
+import { Toaster } from "react-hot-toast";
 import GoogleLoginButton from "./components/GoogleLoginButton";
 import { THEME } from "@/constants/theme";
 import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from "@/constants/wrapper";
 import type { ThemeAttributesType, ThemeNameType } from "@/types/theme";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
+
+const GlobelStyle = createGlobalStyle`
+  :root {
+    --purple: #6941c6;
+    --active-color: #994639;
+    --active-color-hover: rgba(153, 70, 57, 0.7);
+  }
+`;
 
 const Wrapper = styled.div<{ $theme: ThemeAttributesType }>`
   width: 100%;
@@ -228,6 +237,7 @@ export default function LayoutWrapper({
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobelStyle />
       <Wrapper $theme={theme}>
         <Header $theme={theme}>
           <BannerNavigation $theme={theme}>
@@ -364,6 +374,7 @@ export default function LayoutWrapper({
           )}
         </Footer>
       </Wrapper>
+      <Toaster />
     </ThemeProvider>
   );
 }

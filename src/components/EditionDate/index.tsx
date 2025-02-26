@@ -7,7 +7,7 @@ const EditionDateComponent = styled.span`
   font-size: 20px;
   line-height: 20px;
   white-space: nowrap;
-  color: #6941c6;
+  color: var(--purple);
 `;
 
 function getDateFromTimestamp(timestamp: EditionDataCreateTimestampType) {

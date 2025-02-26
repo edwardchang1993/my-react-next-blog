@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { styled } from "styled-components";
+import { styled, useTheme } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
+import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/components/MenuBar/constants";
 import type { EditorContentPreviewPropsType } from "./types";
-import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/constants";
+import type { ThemeAttributesType } from "@/types/theme";
 
 const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
   display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
@@ -12,10 +13,10 @@ const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
   margin-bottom: ${(props) => (props.$isNeedReadMore ? "16px" : 0)};
 `;
 
-const ReadMoreButton = styled.div`
+const ReadMoreButton = styled.div<{ $theme: ThemeAttributesType }>`
   cursor: pointer;
   display: inline-block;
-  color: #b4b5b4;
+  color: ${(props) => props.$theme.subText};
   font-size: 16px;
   line-height: 16px;
   margin: 12px;
@@ -28,6 +29,7 @@ const ReadMoreButton = styled.div`
 export default function EditorContentPreview(
   props: EditorContentPreviewPropsType
 ) {
+  const theme = useTheme();
   const contentRef = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     shouldRerenderOnTransaction: false,
@@ -81,7 +83,9 @@ export default function EditorContentPreview(
         <EditorContent editor={editor} />
       </Wrapper>
       {isNeedReadMore ? (
-        <ReadMoreButton onClick={clickReadMoreButton}>閱讀更多</ReadMoreButton>
+        <ReadMoreButton $theme={theme} onClick={clickReadMoreButton}>
+          閱讀更多
+        </ReadMoreButton>
       ) : (
         <></>
       )}
