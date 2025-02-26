@@ -1,18 +1,11 @@
 import { useCurrentEditor } from "@tiptap/react";
 import { Node } from "@tiptap/core";
 import { Color } from "@tiptap/extension-color";
+import Link from "@tiptap/extension-link";
 import TextStyle from "@tiptap/extension-text-style";
 import Image from "@tiptap/extension-image";
 import StarterKit from "@tiptap/starter-kit";
-import {
-  TiptapReplaceLinkToImageButtonOnClick,
-  TiptapReplaceLinkToImageButtonIsDisabled,
-  TiptapReplaceLinkToImageButtonClassName,
-  TiptapReplaceLinkToVideoButtonOnClick,
-  TiptapReplaceLinkToVideoButtonIsDisabled,
-  TiptapReplaceLinkToVideoButtonClassName,
-} from "./utils";
-import type { MenuConfigButtonItemType } from "./types";
+import type { MenuConfigButtonItemType } from "../../types";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
 
@@ -127,18 +120,6 @@ export const MENU_BUTTON_CONFIG_LIST: MenuConfigButtonItemType[] = [
       editor?.isActive("codeBlock") ? "is-active" : "",
   },
   {
-    label: "Replace Link To Image",
-    onClick: TiptapReplaceLinkToImageButtonOnClick,
-    isDisabled: TiptapReplaceLinkToImageButtonIsDisabled,
-    className: TiptapReplaceLinkToImageButtonClassName,
-  },
-  {
-    label: "Replace Link To Video",
-    onClick: TiptapReplaceLinkToVideoButtonOnClick,
-    isDisabled: TiptapReplaceLinkToVideoButtonIsDisabled,
-    className: TiptapReplaceLinkToVideoButtonClassName,
-  },
-  {
     label: "Blockquote",
     onClick: (editor: EditorType) =>
       editor?.chain().focus().toggleBlockquote().run(),
@@ -153,33 +134,6 @@ export const MENU_BUTTON_CONFIG_LIST: MenuConfigButtonItemType[] = [
       editor?.chain().focus().setHardBreak().run(),
     isDisabled: () => false, // Hard Break 按鈕通常不需要禁用
     className: () => "", // Hard Break 沒有 active 狀態
-  },
-  {
-    label: "Undo",
-    onClick: (editor: EditorType) => editor?.chain().focus().undo().run(),
-    isDisabled: (editor: EditorType) =>
-      !editor?.can().chain().focus().undo().run(),
-    className: () => "", // Undo 沒有 active 狀態
-  },
-  {
-    label: "Redo",
-    onClick: (editor: EditorType) => editor?.chain().focus().redo().run(),
-    isDisabled: (editor: EditorType) =>
-      !editor?.can().chain().focus().redo().run(),
-    className: () => "", // Redo 沒有 active 狀態
-  },
-  {
-    label: "Remove All Marks",
-    onClick: (editor: EditorType) =>
-      editor?.chain().focus().unsetAllMarks().run(),
-    isDisabled: () => false, // Remove All Marks 按鈕通常不需要禁用
-    className: () => "", // Remove All Marks 沒有 active 狀態
-  },
-  {
-    label: "Remove All Nodes",
-    onClick: (editor: EditorType) => editor?.chain().focus().clearNodes().run(),
-    isDisabled: () => false, // Remove All Nodes 按鈕通常不需要禁用
-    className: () => "", // Remove All Nodes 沒有 active 狀態
   },
 ];
 
@@ -223,6 +177,7 @@ const videoNode = Node.create({
 });
 
 export const TIPTAP_EXTENSIONS = [
+  Link,
   Color,
   TextStyle,
   StarterKit.configure({
