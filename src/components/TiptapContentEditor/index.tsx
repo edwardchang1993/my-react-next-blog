@@ -2,7 +2,7 @@ import React from "react";
 import { styled, useTheme } from "styled-components";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import MenuBar from "./components/MenuBar";
-import { TIPTAP_EXTENSIONS } from "./components/MenuBar/constants";
+import { TIPTAP_EXTENSIONS } from "./constants";
 import type { ThemeAttributesType } from "@/types/theme";
 import type { TiptapContentEditorPropsTypes } from "./types";
 

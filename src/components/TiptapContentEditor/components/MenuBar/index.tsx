@@ -5,7 +5,7 @@ import ButtonDialog from "@/components/ButtonDialog";
 import { MENU_BUTTON_CONFIG_LIST } from "./constants";
 import { NodeSelection } from "prosemirror-state";
 import toast from "react-hot-toast";
-import { isUrl, isImageUrl, isVideoUrl } from "@/utils/regexValidate";
+import { isUrl, isVideoUrl } from "@/utils/regexValidate";
 import type { ThemeAttributesType } from "@/types/theme";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
@@ -21,8 +21,8 @@ const MenuButton = styled.button<{
   font-weight: 500;
   line-height: 1rem;
   padding: 6px 12px;
-  cursor: pointer;
   transition: all 0.2s cubic-bezier(0.65, 0.05, 0.36, 1);
+  cursor: pointer;
   color: ${(props) => props.$theme.revertText};
   background-color: ${(props) => props.$theme.buttonBackground};
 
@@ -103,8 +103,8 @@ export default function MenuBar() {
     useState(false);
   const [isInsertVideoDialogVisible, setIsInsertVideoDialogVisible] =
     useState(false);
-  const [imageUrl, setImageUrl] = useState("https://i.meee.com.tw/mIidscN.png");
-  const [link, setLink] = useState("https://google.com");
+  const [imageUrl, setImageUrl] = useState("");
+  const [link, setLink] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
 
   if (!editor) {
@@ -116,7 +116,7 @@ export default function MenuBar() {
       return;
     }
 
-    if (!isImageUrl(imageUrl)) {
+    if (!isUrl(imageUrl)) {
       toast.error("請輸入正確的圖片網址格式");
       return;
     }
@@ -216,7 +216,6 @@ export default function MenuBar() {
             />
           </Fieldset>
         </ButtonDialog>
-
         <ButtonDialog
           visible={isInsertVideoDialogVisible}
           triggerButton={

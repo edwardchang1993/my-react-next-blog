@@ -1,15 +1,33 @@
 import { useCurrentEditor } from "@tiptap/react";
-import { Node } from "@tiptap/core";
-import { Color } from "@tiptap/extension-color";
-import Link from "@tiptap/extension-link";
-import TextStyle from "@tiptap/extension-text-style";
-import Image from "@tiptap/extension-image";
-import StarterKit from "@tiptap/starter-kit";
 import type { MenuConfigButtonItemType } from "../../types";
 
 type EditorType = ReturnType<typeof useCurrentEditor>["editor"];
 
 export const MENU_BUTTON_CONFIG_LIST: MenuConfigButtonItemType[] = [
+  {
+    label: "Left",
+    onClick: (editor: EditorType) => editor?.commands.setTextAlign("left"),
+    isDisabled: (editor: EditorType) =>
+      !editor?.can().chain().focus().setTextAlign("left").run(),
+    className: (editor: EditorType) =>
+      editor?.isActive({ textAlign: "left" }) ? "is-active" : "",
+  },
+  {
+    label: "Center",
+    onClick: (editor: EditorType) => editor?.commands.setTextAlign("center"),
+    isDisabled: (editor: EditorType) =>
+      !editor?.can().chain().focus().setTextAlign("center").run(),
+    className: (editor: EditorType) =>
+      editor?.isActive({ textAlign: "center" }) ? "is-active" : "",
+  },
+  {
+    label: "Right",
+    onClick: (editor: EditorType) => editor?.commands.setTextAlign("right"),
+    isDisabled: (editor: EditorType) =>
+      !editor?.can().chain().focus().setTextAlign("right").run(),
+    className: (editor: EditorType) =>
+      editor?.isActive({ textAlign: "right" }) ? "is-active" : "",
+  },
   {
     label: "Bold",
     onClick: (editor: EditorType) => editor?.chain().focus().toggleBold().run(),
@@ -135,67 +153,11 @@ export const MENU_BUTTON_CONFIG_LIST: MenuConfigButtonItemType[] = [
     isDisabled: () => false, // Hard Break 按鈕通常不需要禁用
     className: () => "", // Hard Break 沒有 active 狀態
   },
-];
-
-const videoNode = Node.create({
-  name: "video",
-  group: "block",
-  content: "text*",
-  inline: false,
-  draggable: true,
-
-  addAttributes() {
-    return {
-      src: {
-        default: null,
-      },
-    };
+  {
+    label: "Insert Divider",
+    onClick: (editor: EditorType) =>
+      editor?.chain().focus().setHorizontalRule().run(),
+    isDisabled: () => false,
+    className: () => "",
   },
-
-  renderHTML({ node }) {
-    return [
-      "video",
-      {
-        src: node.attrs.src,
-        controls: true,
-        autoplay: true,
-        class: "tiptap-default-video",
-      },
-    ];
-  },
-
-  parseHTML() {
-    return [
-      {
-        tag: "video",
-        getAttrs: (dom) => ({
-          src: dom.getAttribute("src"),
-        }),
-      },
-    ];
-  },
-});
-
-export const TIPTAP_EXTENSIONS = [
-  Link,
-  Color,
-  TextStyle,
-  StarterKit.configure({
-    bulletList: {
-      keepMarks: true,
-      keepAttributes: false,
-    },
-    orderedList: {
-      keepMarks: true,
-      keepAttributes: false,
-    },
-  }),
-  Image.configure({
-    inline: true,
-    allowBase64: false,
-    HTMLAttributes: {
-      class: "tiptap-default-image",
-    },
-  }),
-  videoNode,
 ];

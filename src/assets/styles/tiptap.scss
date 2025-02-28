@@ -91,8 +91,13 @@
 
   hr {
     border: none;
-    border-top: 1px solid var(--gray-2);
+    border-top: 1px solid #e5e7eb;
+    cursor: pointer;
     margin: 2rem 0;
+
+    &.ProseMirror-selectednode {
+      border-top: 1px solid var(--active-color);
+    }
   }
 
   a {

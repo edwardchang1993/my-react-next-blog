@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { styled, useTheme } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
-import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/components/MenuBar/constants";
+import { TIPTAP_EXTENSIONS } from "@/components/TiptapContentEditor/constants";
 import type { EditorContentPreviewPropsType } from "./types";
 import type { ThemeAttributesType } from "@/types/theme";
 
