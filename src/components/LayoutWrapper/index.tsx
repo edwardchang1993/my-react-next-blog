@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { styled, ThemeProvider, createGlobalStyle } from "styled-components";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -12,10 +12,10 @@ import {
 } from "react-icons/md";
 import { Toaster } from "react-hot-toast";
 import GoogleLoginButton from "./components/GoogleLoginButton";
+import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import { THEME } from "@/constants/theme";
 import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from "@/constants/wrapper";
 import type { ThemeAttributesType, ThemeNameType } from "@/types/theme";
-import { useGoogleAuth } from "@/context/GoogleAuthContext";
 
 const GlobelStyle = createGlobalStyle`
   :root {
@@ -59,8 +59,8 @@ const BannerNavigation = styled.div<{ $theme: ThemeAttributesType }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${(props) => props.$theme.background};
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* background-color: ${(props) => props.$theme.background}; */
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
 
   @media (max-width: 768px) {
     padding: 0px 20px;
@@ -230,151 +230,154 @@ export default function LayoutWrapper({
 
   function clickModeIcon(themeName: ThemeNameType) {
     setThemeName(themeName);
-    setTheme(THEME[themeName]);
 
     localStorage.setItem("edward_blog_mode", themeName);
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobelStyle />
-      <Wrapper $theme={theme}>
-        <Header $theme={theme}>
-          <BannerNavigation $theme={theme}>
-            <BlogUserName>Edward&apos;s blog</BlogUserName>
-            {size.width && size.width > 576 ? (
-              <>
-                {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
-                  <BannerNavigateItem
-                    key={item.path}
-                    $theme={theme}
-                    className={
-                      pathname.includes(`/${item.path}`) ? "is-active" : ""
-                    }
-                  >
-                    <Link href={{ pathname: item.path }}>{item.label}</Link>
-                  </BannerNavigateItem>
-                ))}
-                <ModeSwitchBlock $theme={theme}>
-                  <MdOutlineLightMode
-                    color={THEME.light.revertBackground}
-                    size={24}
-                    onClick={() => clickModeIcon("light")}
-                    style={
-                      themeName === "light"
-                        ? {
-                            color: theme.background,
-                            backgroundColor: theme.background,
-                            borderRadius: "50rem",
-                            marginRight: "10px",
-                          }
-                        : { marginRight: "10px" }
-                    }
-                  />
-                  <MdOutlineDarkMode
-                    color={THEME.dark.revertBackground}
-                    size={24}
-                    onClick={() => clickModeIcon("dark")}
-                    style={
-                      themeName === "dark"
-                        ? {
-                            color: theme.background,
-                            backgroundColor: theme.background,
-                            borderRadius: "50rem",
-                          }
-                        : {}
-                    }
-                  />
-                </ModeSwitchBlock>
-              </>
-            ) : (
-              <MdMenu
-                color={theme.text}
-                size={32}
-                onClick={() => setMenuSreenMask(true)}
-                style={{ cursor: "pointer" }}
+      <Suspense fallback={<p>Loading</p>}>
+        <GlobelStyle />
+        <Wrapper $theme={theme}>
+          <Header $theme={theme}>
+            <BannerNavigation $theme={theme}>
+              <BlogUserName>Edward&apos;s blog</BlogUserName>
+              {size.width && size.width > 576 ? (
+                <>
+                  {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
+                    <BannerNavigateItem
+                      key={item.path}
+                      $theme={theme}
+                      className={
+                        pathname.includes(`/${item.path}`) ? "is-active" : ""
+                      }
+                    >
+                      <Link href={{ pathname: item.path }}>{item.label}</Link>
+                    </BannerNavigateItem>
+                  ))}
+                  <ModeSwitchBlock $theme={theme}>
+                    <MdOutlineLightMode
+                      color={THEME.light.revertBackground}
+                      size={24}
+                      onClick={() => clickModeIcon("light")}
+                      style={
+                        themeName === "light"
+                          ? {
+                              color: theme.background,
+                              backgroundColor: theme.background,
+                              borderRadius: "50rem",
+                              marginRight: "10px",
+                            }
+                          : { marginRight: "10px" }
+                      }
+                    />
+                    <MdOutlineDarkMode
+                      color={THEME.dark.revertBackground}
+                      size={24}
+                      onClick={() => clickModeIcon("dark")}
+                      style={
+                        themeName === "dark"
+                          ? {
+                              color: theme.background,
+                              backgroundColor: theme.background,
+                              borderRadius: "50rem",
+                            }
+                          : {}
+                      }
+                    />
+                  </ModeSwitchBlock>
+                </>
+              ) : (
+                <MdMenu
+                  color={theme.text}
+                  size={32}
+                  onClick={() => setMenuSreenMask(true)}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </BannerNavigation>
+          </Header>
+          <Container>{children}</Container>
+          <MenuScreenMask
+            $theme={theme}
+            className={menuSreenMask ? "show" : "hide"}
+          >
+            <BlogNameInMenuMask>Edward</BlogNameInMenuMask>
+            {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
+              <BannerNavigateItem
+                key={item.path}
+                $theme={theme}
+                className={
+                  pathname.includes(`/${item.path}`) ? "is-active" : ""
+                }
+              >
+                <Link href={{ pathname: item.path }}>{item.label}</Link>
+              </BannerNavigateItem>
+            ))}
+            <ModeSwitchBlockInMenuMask $theme={theme}>
+              <MdOutlineLightMode
+                color={THEME.light.revertBackground}
+                size={24}
+                onClick={() => clickModeIcon("light")}
+                style={
+                  themeName === "light"
+                    ? {
+                        color: theme.background,
+                        backgroundColor: theme.background,
+                        borderRadius: "50rem",
+                        marginRight: "12px",
+                      }
+                    : { marginRight: "10px" }
+                }
               />
+              <MdOutlineDarkMode
+                color={THEME.dark.revertBackground}
+                size={24}
+                onClick={() => clickModeIcon("dark")}
+                style={
+                  themeName === "dark"
+                    ? {
+                        color: theme.background,
+                        backgroundColor: theme.background,
+                        borderRadius: "50rem",
+                      }
+                    : {}
+                }
+              />
+            </ModeSwitchBlockInMenuMask>
+            {isScriptLoaded ? (
+              <GoogleLoginButton
+                id="mask-google-signin-button"
+                customStyle={{ marginTop: "20px" }}
+              />
+            ) : (
+              <></>
             )}
-          </BannerNavigation>
-        </Header>
-        <Container>{children}</Container>
-        <MenuScreenMask
-          $theme={theme}
-          className={menuSreenMask ? "show" : "hide"}
-        >
-          <BlogNameInMenuMask>Edward</BlogNameInMenuMask>
-          {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
-            <BannerNavigateItem
-              key={item.path}
-              $theme={theme}
-              className={pathname.includes(`/${item.path}`) ? "is-active" : ""}
-            >
-              <Link href={{ pathname: item.path }}>{item.label}</Link>
-            </BannerNavigateItem>
-          ))}
-          <ModeSwitchBlockInMenuMask $theme={theme}>
-            <MdOutlineLightMode
-              color={THEME.light.revertBackground}
+            <MdOutlineClose
+              color={theme.text}
               size={24}
-              onClick={() => clickModeIcon("light")}
-              style={
-                themeName === "light"
-                  ? {
-                      color: theme.background,
-                      backgroundColor: theme.background,
-                      borderRadius: "50rem",
-                      marginRight: "12px",
-                    }
-                  : { marginRight: "10px" }
-              }
+              onClick={() => setMenuSreenMask(false)}
+              style={{
+                cursor: "pointer",
+                marginTop: "auto",
+                marginBottom: "24px",
+              }}
             />
-            <MdOutlineDarkMode
-              color={THEME.dark.revertBackground}
-              size={24}
-              onClick={() => clickModeIcon("dark")}
-              style={
-                themeName === "dark"
-                  ? {
-                      color: theme.background,
-                      backgroundColor: theme.background,
-                      borderRadius: "50rem",
-                    }
-                  : {}
-              }
-            />
-          </ModeSwitchBlockInMenuMask>
-          {isScriptLoaded ? (
-            <GoogleLoginButton
-              id="mask-google-signin-button"
-              customStyle={{ marginTop: "20px" }}
-            />
-          ) : (
-            <></>
-          )}
-          <MdOutlineClose
-            color={theme.text}
-            size={24}
-            onClick={() => setMenuSreenMask(false)}
-            style={{
-              cursor: "pointer",
-              marginTop: "auto",
-              marginBottom: "24px",
-            }}
-          />
-        </MenuScreenMask>
-        <Footer $theme={theme}>
-          <span>© 2025 Edward Powered by Vercel</span>
-          {isScriptLoaded ? (
-            <GoogleLoginButton
-              id="google-signin-button"
-              customStyle={{ marginLeft: "8px" }}
-            />
-          ) : (
-            <></>
-          )}
-        </Footer>
-      </Wrapper>
-      <Toaster />
+          </MenuScreenMask>
+          <Footer $theme={theme}>
+            <span>© 2025 Edward Powered by Vercel</span>
+            {isScriptLoaded ? (
+              <GoogleLoginButton
+                id="google-signin-button"
+                customStyle={{ marginLeft: "8px" }}
+              />
+            ) : (
+              <></>
+            )}
+          </Footer>
+        </Wrapper>
+        <Toaster />
+      </Suspense>
     </ThemeProvider>
   );
 }
