@@ -1,6 +1,7 @@
 import "@/assets/styles/globals.scss";
 import "@/assets/styles/tiptap.scss";
 import { Varela_Round } from "next/font/google";
+import StyledComponentsRegistry from "@/lib/registry";
 import { GoogleAuthProvider } from "@/context/GoogleAuthContext";
 import LayoutWrapper from "@/components/LayoutWrapper/index";
 
@@ -46,9 +47,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={varelaRound.className}>
-        <GoogleAuthProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-        </GoogleAuthProvider>
+        <StyledComponentsRegistry>
+          <GoogleAuthProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </GoogleAuthProvider>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
