@@ -32,6 +32,25 @@ const Wrapper = styled.div<{ $theme: ThemeAttributesType }>`
   color: ${(props) => props.$theme.text};
   overflow: scroll;
   transition: background-color 0.3s ease, color 0.3s ease;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+    border-radius: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #333;
+  }
+  &::-webkit-scrollbar-corner {
+    background: inherit;
+  }
 `;
 
 const Header = styled.div<{ $theme: ThemeAttributesType }>`
@@ -166,6 +185,7 @@ const Footer = styled.div<{ $theme: ThemeAttributesType }>`
 
   @media (max-width: 768px) {
     margin: 0;
+    padding: 30px 20px;
   }
 `;
 
@@ -301,7 +321,7 @@ export default function LayoutWrapper({
             $theme={theme}
             className={menuSreenMask ? "show" : "hide"}
           >
-            <BlogNameInMenuMask>Edward</BlogNameInMenuMask>
+            <BlogNameInMenuMask>Edward&apos;s blog</BlogNameInMenuMask>
             {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
               <BannerNavigateItem
                 key={item.path}
@@ -310,7 +330,12 @@ export default function LayoutWrapper({
                   pathname.includes(`/${item.path}`) ? "is-active" : ""
                 }
               >
-                <Link href={{ pathname: item.path }}>{item.label}</Link>
+                <Link
+                  href={{ pathname: item.path }}
+                  onClick={() => setMenuSreenMask(false)}
+                >
+                  {item.label}
+                </Link>
               </BannerNavigateItem>
             ))}
             <ModeSwitchBlockInMenuMask $theme={theme}>
@@ -359,7 +384,7 @@ export default function LayoutWrapper({
               style={{
                 cursor: "pointer",
                 marginTop: "auto",
-                marginBottom: "24px",
+                marginBottom: "36px",
               }}
             />
           </MenuScreenMask>

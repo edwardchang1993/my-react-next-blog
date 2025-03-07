@@ -30,7 +30,13 @@ export default function GoogleLoginButton(props: GoogleLoginButtonPropsTypes) {
     }
   });
 
-  return <div id={props.id} ref={buttonRef} style={props.customStyle} />;
+  return (
+    <div
+      id={props.id}
+      ref={buttonRef}
+      style={{ width: "40px", height: "40px", ...props.customStyle }}
+    />
+  );
 }
 
 GoogleLoginButton.defaultProps = {
