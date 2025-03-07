@@ -24,7 +24,7 @@ export default function AboutMePage() {
 
   const { isAdmin } = useGoogleAuth();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isFirestoreDataLoaded, setIsFirestoreDataLoaded] =
     useState<boolean>(false);
   const [isFetchingAboutMe, setIsFetchingAboutMe] = useState<boolean>(false);
@@ -46,12 +46,19 @@ export default function AboutMePage() {
       setOriginAboutMe(aboutMeData.about_me_content);
       setNewAboutMe(aboutMeData.about_me_content);
       setIsFetchingAboutMe(true);
+      setIsLoading(false);
     } else {
       console.log("[docSnap not exists]", docSnap);
+
+      setIsLoading(false);
     }
   }
 
   async function submit() {
+    if (isLoading) {
+      return;
+    }
+
     if (!newAboutMe) {
       toast.error("內容不可為空");
       return;
@@ -112,7 +119,11 @@ export default function AboutMePage() {
         <></>
       )}
       <AboutMeTiptapFooter>
-        {isAdmin ? <SubmitButton label="儲存" onClick={submit} /> : <></>}
+        {isAdmin && !isLoading ? (
+          <SubmitButton label="儲存" onClick={submit} />
+        ) : (
+          <></>
+        )}
       </AboutMeTiptapFooter>
       <FullScreenLoading isLoading={isLoading} />
     </>

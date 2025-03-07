@@ -59,8 +59,6 @@ const BannerNavigation = styled.div<{ $theme: ThemeAttributesType }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: ${(props) => props.$theme.background}; */
-  /* transition: background-color 0.3s ease, color 0.3s ease; */
 
   @media (max-width: 768px) {
     padding: 0px 20px;
@@ -158,6 +156,7 @@ const ModeSwitchBlockInMenuMask = styled(ModeSwitchBlock)`
 `;
 
 const Footer = styled.div<{ $theme: ThemeAttributesType }>`
+  height: 40px;
   padding: 30px 0;
   margin: 0 10%;
   border-top: 1px solid ${(props) => props.$theme.text};

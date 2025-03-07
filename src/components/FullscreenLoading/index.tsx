@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.7;
 `;
 
 export default function FullScreenLoading(props: FullscreenLoadingPropsTypes) {

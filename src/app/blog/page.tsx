@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { styled, useTheme } from "styled-components";
+import FullScreenLoading from "@/components/FullscreenLoading";
 import EditionDate from "@/components/EditionDate";
 import EditionName from "@/components/EditionName";
 import EditionContentPreview from "@/components/EditorContentPreview";
@@ -25,9 +26,15 @@ const BlogEditionItem = styled.div<{ $theme: ThemeAttributesType }>`
 export default function BlogPage() {
   const router = useRouter();
   const theme = useTheme();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isFetchingBlogs, setIsFetchingBlogs] = useState<boolean>(false);
   const [editionList, setEditionList] = useState<EditionDataType[]>([]);
 
   async function fetchEditionList() {
+    if (isFetchingBlogs) {
+      return;
+    }
+
     await getDocs(collection(db, "edition_list")).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
@@ -36,6 +43,9 @@ export default function BlogPage() {
 
       setEditionList(newData);
     });
+
+    setIsFetchingBlogs(true);
+    setIsLoading(false);
   }
 
   function redirectToEdition(id: FirestoreCollectionIdType) {
@@ -44,14 +54,10 @@ export default function BlogPage() {
 
   useEffect(() => {
     fetchEditionList();
-  }, []);
-
-  if (!editionList.length) {
-    return null;
-  }
+  });
 
   return (
-    <div>
+    <>
       <Title>Recent blog posts</Title>
       {editionList.map((edition, index) => {
         return (
@@ -70,6 +76,7 @@ export default function BlogPage() {
           </BlogEditionItem>
         );
       })}
-    </div>
+      <FullScreenLoading isLoading={isLoading} />
+    </>
   );
 }

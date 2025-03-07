@@ -8,8 +8,11 @@ export function isVideoUrl(text: string) {
   );
 }
 
-export function isUrl(text: string) {
-  return /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i.test(
-    text
-  );
+export function isUrl(text: string): boolean {
+  try {
+    new URL(text);
+    return true;
+  } catch {
+    return false;
+  }
 }
