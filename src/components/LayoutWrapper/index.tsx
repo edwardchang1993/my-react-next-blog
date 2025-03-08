@@ -375,7 +375,9 @@ export default function LayoutWrapper({
                 customStyle={{ marginTop: "20px" }}
               />
             ) : (
-              <></>
+              <div
+                style={{ width: "40px", height: "40px", marginTop: "20px" }}
+              />
             )}
             <MdOutlineClose
               color={theme.text}
@@ -396,7 +398,7 @@ export default function LayoutWrapper({
                 customStyle={{ marginLeft: "8px" }}
               />
             ) : (
-              <></>
+              <div style={{ width: "40px", height: "40px" }} />
             )}
           </Footer>
         </Wrapper>
