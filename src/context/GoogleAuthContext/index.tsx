@@ -76,8 +76,10 @@ export function GoogleAuthProvider({ children }: { children: ReactNode }) {
 
 export function useGoogleAuth() {
   const context = useContext(GoogleAuthContext);
+
   if (!context) {
     throw new Error("useGoogleAuth 必須在 GoogleAuthProvider 內使用");
   }
+
   return context;
 }
