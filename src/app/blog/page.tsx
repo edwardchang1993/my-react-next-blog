@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { styled, useTheme } from "styled-components";
-import FullScreenLoading from "@/components/FullscreenLoading";
+import { useLoading } from "@/context/LoadingContext";
 import EditionDate from "@/components/EditionDate";
 import EditionName from "@/components/EditionName";
 import EditionContentPreview from "@/components/EditorContentPreview";
@@ -26,7 +26,8 @@ const BlogEditionItem = styled.div<{ $theme: ThemeAttributesType }>`
 export default function BlogPage() {
   const router = useRouter();
   const theme = useTheme();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { isLoading, setIsLoading } = useLoading();
+
   const [isFetchingBlogs, setIsFetchingBlogs] = useState<boolean>(false);
   const [editionList, setEditionList] = useState<EditionDataType[]>([]);
 
@@ -34,6 +35,8 @@ export default function BlogPage() {
     if (isFetchingBlogs) {
       return;
     }
+
+    setIsLoading(true);
 
     await getDocs(collection(db, "edition_list")).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -59,24 +62,27 @@ export default function BlogPage() {
   return (
     <>
       <Title>Recent blog posts</Title>
-      {editionList.map((edition, index) => {
-        return (
-          <BlogEditionItem key={index} $theme={theme}>
-            <EditionDate timestamp={edition.create_timestamp} />
-            <EditionName
-              editionName={edition.edition_name}
-              redirectToEdition={() => redirectToEdition(edition.id)}
-            />
-            <EditionContentPreview
-              editionContent={edition.edition_content}
-              hasReadMore={true}
-              redirectToEdition={() => redirectToEdition(edition.id)}
-            />
-            {/* <EditionTagList editionTagList={edition.edition_tag_list} /> */}
-          </BlogEditionItem>
-        );
-      })}
-      <FullScreenLoading isLoading={isLoading} />
+      {isLoading ? (
+        <></>
+      ) : (
+        editionList.map((edition, index) => {
+          return (
+            <BlogEditionItem key={index} $theme={theme}>
+              <EditionDate timestamp={edition.create_timestamp} />
+              <EditionName
+                editionName={edition.edition_name}
+                redirectToEdition={() => redirectToEdition(edition.id)}
+              />
+              <EditionContentPreview
+                editionContent={edition.edition_content}
+                hasReadMore={true}
+                redirectToEdition={() => redirectToEdition(edition.id)}
+              />
+              {/* <EditionTagList editionTagList={edition.edition_tag_list} /> */}
+            </BlogEditionItem>
+          );
+        })
+      )}
     </>
   );
 }

@@ -7,7 +7,7 @@ import { collection, addDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
-import FullScreenLoading from "@/components/FullscreenLoading";
+import { useLoading } from "@/context/LoadingContext";
 // import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
@@ -58,8 +58,8 @@ const NewEditionTiptapFooter = styled.div`
 export default function NewAEditionPage() {
   const theme = useTheme();
   const { isAdmin } = useGoogleAuth();
+  const { isLoading, setIsLoading } = useLoading();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [editorContent, setEditorContent] =
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
   const [editionName, setEditionName] =
@@ -95,6 +95,8 @@ export default function NewAEditionPage() {
       return;
     }
 
+    setIsLoading(true);
+
     // if (!editionTagList.length) {
     //   toast.error("請填入至少一個標籤");
     //   return;
@@ -106,8 +108,6 @@ export default function NewAEditionPage() {
       edition_name: editionName,
       // edition_tag_list: editionTagList,
     };
-
-    setIsLoading(true);
 
     await addDoc(collection(db, "edition_list"), data);
 
@@ -164,7 +164,6 @@ export default function NewAEditionPage() {
         <NewEditionTiptapFooter>
           <SubmitButton label="送出" onClick={submit} />
         </NewEditionTiptapFooter>
-        <FullScreenLoading isLoading={isLoading} />
       </NewEditionTiptapWrapper>
     </>
   );

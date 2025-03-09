@@ -1,7 +1,9 @@
+"use client";
+
 import { CSSProperties } from "react";
 import { styled } from "styled-components";
 import PacmanLoader from "react-spinners/PacmanLoader";
-import type { FullscreenLoadingPropsTypes } from "./types";
+import { useLoading } from "@/context/LoadingContext";
 
 const ClipLoaderCssOverride: CSSProperties = {
   display: "block",
@@ -22,14 +24,18 @@ const Wrapper = styled.div`
   opacity: 0.7;
 `;
 
-export default function FullScreenLoading(props: FullscreenLoadingPropsTypes) {
-  if (!props.isLoading) return null;
+export default function FullScreenLoading() {
+  const { isLoading } = useLoading();
+
+  if (!isLoading) {
+    return null;
+  }
 
   return (
     <Wrapper>
       <PacmanLoader
         color="#FFFFFF"
-        loading={props.isLoading}
+        loading={isLoading}
         cssOverride={ClipLoaderCssOverride}
         size={60}
         aria-label="Loading Spinner"

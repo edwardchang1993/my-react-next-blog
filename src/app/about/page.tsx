@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
+import { useLoading } from "@/context/LoadingContext";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
-import FullScreenLoading from "@/components/FullscreenLoading";
 import EditorContentPreview from "@/components/EditorContentPreview";
 import type { AboutMeDataType, AboutMeDataContentType } from "@/types/editor";
 
@@ -23,8 +23,8 @@ export default function AboutMePage() {
     .NEXT_PUBLIC_FIRESTORE_ABOUT_ME_COLLECTION_ID as string;
 
   const { isAdmin } = useGoogleAuth();
+  const { isLoading, setIsLoading } = useLoading();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isFirestoreDataLoaded, setIsFirestoreDataLoaded] =
     useState<boolean>(false);
   const [isFetchingAboutMe, setIsFetchingAboutMe] = useState<boolean>(false);
@@ -125,7 +125,6 @@ export default function AboutMePage() {
           <></>
         )}
       </AboutMeTiptapFooter>
-      <FullScreenLoading isLoading={isLoading} />
     </>
   );
 }
