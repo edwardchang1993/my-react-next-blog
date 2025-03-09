@@ -13,13 +13,14 @@ import {
 import { Toaster } from "react-hot-toast";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import { LoadingProvider } from "@/context/LoadingContext";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import FullScreenLoading from "@/components/FullscreenLoading";
 import GoogleLoginButton from "./components/GoogleLoginButton";
 import { THEME } from "@/constants/theme";
 import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from "@/constants/wrapper";
 import type { ThemeAttributesType, ThemeNameType } from "@/types/theme";
 
-const GlobelStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   :root {
     --purple: #6941c6;
     --active-color: #994639;
@@ -202,7 +203,7 @@ export default function LayoutWrapper({
   const [menuSreenMask, setMenuSreenMask] = useState<boolean>(false);
 
   const { isScriptLoaded } = useGoogleAuth();
-  const size = useWindowSize();
+  const { windowWidth } = useWindowSize();
 
   useEffect(() => {
     const defaultMode = localStorage.getItem(
@@ -218,60 +219,37 @@ export default function LayoutWrapper({
     setTheme(THEME[themeName]);
   }, [themeName]);
 
-  function useWindowSize() {
-    const [windowSize, setWindowSize] = useState<{
-      width: number | undefined;
-      height: number | undefined;
-    }>({
-      width: undefined,
-      height: undefined,
-    });
-
-    useEffect(() => {
-      if (typeof window === "undefined") {
-        return;
-      }
-
-      function handleResize() {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      }
-
-      window.addEventListener("resize", handleResize);
-
-      handleResize();
-
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    return windowSize;
+  function isNavigateItemActive(itemPath: string) {
+    return pathname === `/${itemPath}`;
   }
 
-  function clickModeIcon(themeName: ThemeNameType) {
-    setThemeName(themeName);
+  function clickModeIcon(newThemeName: ThemeNameType) {
+    if (themeName === newThemeName) {
+      return;
+    }
 
-    localStorage.setItem("edward_blog_mode", themeName);
+    setThemeName(newThemeName);
+
+    localStorage.setItem("edward_blog_mode", newThemeName);
   }
 
   return (
     <ThemeProvider theme={theme}>
       <LoadingProvider>
         <Suspense fallback={<p>Loading</p>}>
-          <GlobelStyle />
+          <GlobalStyle />
           <Wrapper $theme={theme}>
             <Header $theme={theme}>
               <BannerNavigation $theme={theme}>
                 <BlogUserName>Edward&apos;s blog</BlogUserName>
-                {size.width && size.width > 576 ? (
+                {windowWidth && windowWidth > 576 ? (
                   <>
                     {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
                       <BannerNavigateItem
                         key={item.path}
                         $theme={theme}
                         className={
-                          pathname.includes(`/${item.path}`) ? "is-active" : ""
+                          isNavigateItemActive(item.path) ? "is-active" : ""
                         }
                       >
                         <Link href={{ pathname: item.path }}>{item.label}</Link>
@@ -329,9 +307,7 @@ export default function LayoutWrapper({
                 <BannerNavigateItem
                   key={item.path}
                   $theme={theme}
-                  className={
-                    pathname.includes(`/${item.path}`) ? "is-active" : ""
-                  }
+                  className={isNavigateItemActive(item.path) ? "is-active" : ""}
                 >
                   <Link
                     href={{ pathname: item.path }}
