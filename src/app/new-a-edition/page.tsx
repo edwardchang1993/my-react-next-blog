@@ -58,7 +58,7 @@ const NewEditionTiptapFooter = styled.div`
 export default function NewAEditionPage() {
   const theme = useTheme();
   const { isAdmin } = useGoogleAuth();
-  const { isLoading, setIsLoading } = useLoading();
+  const { setIsLoading } = useLoading();
 
   const [editorContent, setEditorContent] =
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
