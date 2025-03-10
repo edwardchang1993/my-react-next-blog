@@ -7,7 +7,7 @@ import { collection, addDoc } from "firebase/firestore";
 import toast from "react-hot-toast";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
-import { useLoading } from "@/context/LoadingContext";
+// import { useLoading } from "@/context/LoadingContext";
 // import EditionTagList from "@/components/EditionTagList";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
@@ -58,7 +58,7 @@ const NewEditionTiptapFooter = styled.div`
 export default function NewAEditionPage() {
   const theme = useTheme();
   const { isAdmin } = useGoogleAuth();
-  const { setIsLoading } = useLoading();
+  // const { setIsLoading } = useLoading();
 
   const [editorContent, setEditorContent] =
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
@@ -95,7 +95,7 @@ export default function NewAEditionPage() {
       return;
     }
 
-    setIsLoading(true);
+    // setIsLoading(true);
 
     // if (!editionTagList.length) {
     //   toast.error("請填入至少一個標籤");
@@ -111,7 +111,7 @@ export default function NewAEditionPage() {
 
     await addDoc(collection(db, "edition_list"), data);
 
-    setIsLoading(false);
+    // setIsLoading(false);
   }
 
   if (!isAdmin) {

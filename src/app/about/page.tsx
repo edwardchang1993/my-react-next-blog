@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
-import { useLoading } from "@/context/LoadingContext";
+// import { useLoading } from "@/context/LoadingContext";
 import TiptapContentEditor from "@/components/TiptapContentEditor";
 import SubmitButton from "@/components/SubmitButton";
 import EditorContentPreview from "@/components/EditorContentPreview";
@@ -23,7 +23,7 @@ export default function AboutMePage() {
     .NEXT_PUBLIC_FIRESTORE_ABOUT_ME_COLLECTION_ID as string;
 
   const { isAdmin } = useGoogleAuth();
-  const { isLoading, setIsLoading } = useLoading();
+  // const { isLoading, setIsLoading } = useLoading();
 
   const [isFirestoreDataLoaded, setIsFirestoreDataLoaded] =
     useState<boolean>(false);
@@ -46,18 +46,18 @@ export default function AboutMePage() {
       setOriginAboutMe(aboutMeData.about_me_content);
       setNewAboutMe(aboutMeData.about_me_content);
       setIsFetchingAboutMe(true);
-      setIsLoading(false);
+      // setIsLoading(false);
     } else {
       console.log("[docSnap not exists]", docSnap);
 
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }
 
   async function submit() {
-    if (isLoading) {
-      return;
-    }
+    // if (isLoading) {
+    //   return;
+    // }
 
     if (!newAboutMe) {
       toast.error("內容不可為空");
@@ -70,7 +70,7 @@ export default function AboutMePage() {
         update_timestamp: new Date().getTime(),
       };
 
-      setIsLoading(true);
+      // setIsLoading(true);
 
       const docRef = doc(db, "about_me", collectionId);
 
@@ -80,7 +80,7 @@ export default function AboutMePage() {
     } catch (e) {
       console.error(e);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   }
 
@@ -119,7 +119,8 @@ export default function AboutMePage() {
         <></>
       )}
       <AboutMeTiptapFooter>
-        {isAdmin && !isLoading ? (
+        {isAdmin ? (
+          // && !isLoading
           <SubmitButton label="儲存" onClick={submit} />
         ) : (
           <></>
