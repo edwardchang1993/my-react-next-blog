@@ -198,7 +198,9 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [themeName, setThemeName] = useState<ThemeNameType>("dark");
+  const [themeName, setThemeName] = useState<ThemeNameType>(
+    localStorage.getItem("edward_blog_mode") as ThemeNameType
+  );
   const [theme, setTheme] = useState<ThemeAttributesType>(THEME[themeName]);
   const [menuSreenMask, setMenuSreenMask] = useState<boolean>(false);
 
