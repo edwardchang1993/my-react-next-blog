@@ -94,7 +94,6 @@ const BannerNavigateItem = styled.div<{ $theme: ThemeAttributesType }>`
   margin: 0 16px;
   & > a {
     color: ${(props) => props.$theme.text};
-    text-decoration: unset;
   }
   &.is-active {
     font-weight: bold;
@@ -133,7 +132,7 @@ const BannerNavigateItem = styled.div<{ $theme: ThemeAttributesType }>`
   }
 `;
 
-const BlogUserName = styled.span`
+const BlogUserName = styled.a<{ $theme: ThemeAttributesType }>`
   font-size: 20px;
   line-height: 60px;
   font-weight: bold;
@@ -141,6 +140,7 @@ const BlogUserName = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  color: ${(props) => props?.$theme?.text};
 `;
 
 const ModeSwitchBlock = styled.div<{ $theme: ThemeAttributesType }>`
@@ -241,7 +241,12 @@ export default function LayoutWrapper({
           <Wrapper $theme={theme}>
             <Header $theme={theme}>
               <BannerNavigation $theme={theme}>
-                <BlogUserName>Edward&apos;s blog</BlogUserName>
+                <BlogUserName
+                  href="https://edwardchang.blog/blog"
+                  $theme={theme}
+                >
+                  Edward&apos;s blog
+                </BlogUserName>
                 {windowWidth && windowWidth > 576 ? (
                   <>
                     {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
@@ -302,7 +307,9 @@ export default function LayoutWrapper({
               $theme={theme}
               className={menuSreenMask ? "show" : "hide"}
             >
-              <BlogNameInMenuMask>Edward&apos;s blog</BlogNameInMenuMask>
+              <BlogNameInMenuMask $theme={theme}>
+                Edward&apos;s blog
+              </BlogNameInMenuMask>
               {WRAPPER_BANNER_NAVIGATE_ITEM_LIST.map((item) => (
                 <BannerNavigateItem
                   key={item.path}
