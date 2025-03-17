@@ -1,7 +1,7 @@
 import "@/assets/styles/globals.scss";
 import "@/assets/styles/tiptap.scss";
 import { Varela_Round } from "next/font/google";
-import StyledComponentsRegistry from "@/lib/registry";
+import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
 import { GoogleAuthProvider } from "@/context/GoogleAuthContext";
 import LayoutWrapper from "@/components/LayoutWrapper/index";
 

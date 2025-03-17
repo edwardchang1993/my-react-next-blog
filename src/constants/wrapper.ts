@@ -4,8 +4,8 @@ export const WRAPPER_BANNER_NAVIGATE_ITEM_LIST = [
     path: "blog",
   },
   {
-    label: "Portfolio",
-    path: "portfolio",
+    label: "Practice",
+    path: "practice",
   },
   {
     label: "About",
