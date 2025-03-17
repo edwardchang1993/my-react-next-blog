@@ -1,6 +1,6 @@
 "use client";
 
-import { styled, useTheme } from "styled-components";
+import { useTheme } from "styled-components";
 import { CompactTable } from "@table-library/react-table-library/compact";
 import { useTheme as compactTableUseTheme } from "@table-library/react-table-library/theme";
 import { useSpaceX } from "@/hooks/useSpaceX";
@@ -9,11 +9,6 @@ import SubTitle from "@/components/SubTitle";
 import BlogName from "./components/BlogName";
 import BlogTechList from "./components/BlogTechList";
 import type { LauncheType } from "@/hooks/useSpaceX/types";
-
-const ItemContainer = styled.div`
-  height: 300px;
-  padding: 12px;
-`;
 
 export default function PracticePage() {
   const theme = useTheme();
@@ -77,20 +72,20 @@ export default function PracticePage() {
   return (
     <>
       <Title>1. SVG animation</Title>
-      <ItemContainer>
+      <div style={{ padding: "12px" }}>
         <BlogName />
         <BlogTechList />
-      </ItemContainer>
+      </div>
       <Title>2. GraphQL</Title>
-      <SubTitle>SpaceX 最新發射任務</SubTitle>
-      <ItemContainer>
+      <SubTitle>🚀 SpaceX 最新發射任務</SubTitle>
+      <div style={{ padding: "12px", height: "300px" }}>
         <CompactTable
           data={tableData}
           columns={columns}
           theme={compactTableTheme}
           layout={{ isDiv: true, fixedHeader: true }}
         />
-      </ItemContainer>
+      </div>
     </>
   );
 }
