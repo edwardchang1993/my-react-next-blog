@@ -15,10 +15,32 @@ const TechListContainer = styled.div<{ $theme: ThemeAttributesType }>`
   background: ${(props) => props.$theme.background};
 `;
 
-const TechItem = styled.a`
+const TechItem = styled.a<{ $theme: ThemeAttributesType }>`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  &::after {
+    width: 0;
+    background: none repeat scroll 0 0 transparent;
+    left: 50%;
+    bottom: -8px;
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    background-color: ${(props) => props.$theme.revertBackground};
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  }
+
+  &:hover {
+    &::after {
+      width: 100%;
+      left: 0;
+      bottom: -8px;
+    }
+  }
 `;
 
 const IconContainer = styled.svg`
@@ -57,7 +79,7 @@ const IconPath = styled.path<{ $theme: ThemeAttributesType }>`
   animation: ${iconPathAnimation} 30s ease-in-out forwards;
 `;
 
-const TechName = styled.span<{ $theme: ThemeAttributesType }>`
+const TechName = styled.div<{ $theme: ThemeAttributesType }>`
   font-size: 1.2rem;
   word-break: break-all;
   color: ${(props) => props.$theme.text};
@@ -69,7 +91,7 @@ export default function TechList() {
   return (
     <TechListContainer $theme={theme}>
       {TECH_LIST.map((tech, index) => (
-        <TechItem key={index} href={tech.href} target="_blank">
+        <TechItem key={index} href={tech.href} target="_blank" $theme={theme}>
           <IconContainer viewBox="0 0 24 24">
             <IconPath d={tech.iconPath} $theme={theme} />
           </IconContainer>

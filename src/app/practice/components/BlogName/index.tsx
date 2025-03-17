@@ -1,9 +1,32 @@
 "use client";
 
 import { styled, keyframes, useTheme } from "styled-components";
+import type { ThemeAttributesType } from "@/types/theme";
 
-const Container = styled.a`
+const Container = styled.a<{ $theme: ThemeAttributesType }>`
+  position: relative;
   width: 60%;
+
+  &::after {
+    width: 0;
+    background: none repeat scroll 0 0 transparent;
+    left: 50%;
+    bottom: 12px;
+    content: "";
+    display: block;
+    height: 2px;
+    position: absolute;
+    background-color: ${(props) => props.$theme.revertBackground};
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  }
+
+  &:hover {
+    &::after {
+      width: 100%;
+      left: 0;
+      bottom: 12px;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
@@ -53,7 +76,11 @@ export default function BlogNameAnimation() {
   const theme = useTheme();
   return (
     <Wrapper>
-      <Container href="https://edwardchang.blog/blog" target="_blank">
+      <Container
+        href="https://edwardchang.blog/blog"
+        target="_blank"
+        $theme={theme}
+      >
         <Svg viewBox="30 0 900 300">
           {/* E */}
           <Line

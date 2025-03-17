@@ -70,7 +70,7 @@ export default function PracticePage() {
         }
       `,
     Cell: `
-      padding: 12px 0;
+      padding: 12px 4px;
     `,
   });
 
