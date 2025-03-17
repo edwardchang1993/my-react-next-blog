@@ -95,23 +95,31 @@ export default function NewAEditionPage() {
       return;
     }
 
-    // setIsLoading(true);
+    try {
+      // setIsLoading(true);
 
-    // if (!editionTagList.length) {
-    //   toast.error("請填入至少一個標籤");
-    //   return;
-    // }
+      // if (!editionTagList.length) {
+      //   toast.error("請填入至少一個標籤");
+      //   return;
+      // }
 
-    const data = {
-      create_timestamp: new Date().getTime(),
-      edition_content: editorContent,
-      edition_name: editionName,
-      // edition_tag_list: editionTagList,
-    };
+      const data = {
+        create_timestamp: new Date().getTime(),
+        edition_content: editorContent,
+        edition_name: editionName,
+        // edition_tag_list: editionTagList,
+      };
 
-    await addDoc(collection(db, "edition_list"), data);
+      await addDoc(collection(db, "edition_list"), data);
 
-    // setIsLoading(false);
+      toast.success("新增成功");
+    } catch (e) {
+      console.error(e);
+
+      toast.error("新增失敗");
+    } finally {
+      // setIsLoading(false);
+    }
   }
 
   if (!isAdmin) {

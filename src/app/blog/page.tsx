@@ -59,6 +59,10 @@ export default function BlogPage() {
     fetchEditionList();
   });
 
+  if (!isFetchingBlogs) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <Title>Recent blog posts</Title>

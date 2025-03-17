@@ -77,8 +77,12 @@ export default function AboutMePage() {
       await updateDoc(docRef, data);
 
       setOriginAboutMe(newAboutMe);
+
+      toast.success("更新成功");
     } catch (e) {
       console.error(e);
+
+      toast.error("更新失敗");
     } finally {
       // setIsLoading(false);
     }
@@ -93,6 +97,10 @@ export default function AboutMePage() {
       setIsFirestoreDataLoaded(true);
     }
   }, [newAboutMe]);
+
+  if (!isFetchingAboutMe) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
