@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { styled, useTheme } from "styled-components";
 import { collection, addDoc } from "firebase/firestore";
@@ -57,6 +58,7 @@ const NewEditionTiptapFooter = styled.div`
 
 export default function NewAEditionPage() {
   const theme = useTheme();
+  const router = useRouter();
   const { isAdmin } = useGoogleAuth();
   // const { setIsLoading } = useLoading();
 
@@ -113,6 +115,8 @@ export default function NewAEditionPage() {
       await addDoc(collection(db, "edition_list"), data);
 
       toast.success("新增成功");
+
+      router.push("/blog");
     } catch (e) {
       console.error(e);
 
