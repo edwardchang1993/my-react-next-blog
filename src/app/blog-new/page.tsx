@@ -131,7 +131,7 @@ export default function NewAEditionPage() {
       <Title>
         <Image
           src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f4dd.png"
-          alt="new-a-edition-icon"
+          alt="blog-new-icon"
           width={32}
           height={32}
         />

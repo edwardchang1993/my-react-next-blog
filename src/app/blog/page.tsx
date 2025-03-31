@@ -52,7 +52,7 @@ export default function BlogPage() {
   }
 
   function redirectToEdition(id: FirestoreCollectionIdType) {
-    router.push(`/single-edition/?editionId=${id}`);
+    router.push(`/blog-post/?editionId=${id}`);
   }
 
   useEffect(() => {
