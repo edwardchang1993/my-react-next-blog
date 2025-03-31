@@ -6,10 +6,13 @@ import type { EditorContentPreviewPropsType } from "./types";
 import type { ThemeAttributesType } from "@/types/theme";
 
 const Wrapper = styled.div<{ $isNeedReadMore: boolean }>`
-  display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
+  /* display: ${(props) => (props.$isNeedReadMore ? "-webkit-box" : "block")};
   -webkit-box-orient: vertical;
   overflow: ${(props) => (props.$isNeedReadMore ? "hidden" : "unset")};
   -webkit-line-clamp: ${(props) => (props.$isNeedReadMore ? 5 : "none")};
+  margin-bottom: ${(props) => (props.$isNeedReadMore ? "16px" : 0)}; */
+  overflow: ${(props) => (props.$isNeedReadMore ? "hidden" : "unset")};
+  max-height: ${(props) => (props.$isNeedReadMore ? "384px" : "none")};
   margin-bottom: ${(props) => (props.$isNeedReadMore ? "16px" : 0)};
 `;
 
@@ -40,7 +43,7 @@ export default function EditorContentPreview(
   });
   const [isNeedReadMore, setIsNeedReadMore] = useState<boolean>(false);
 
-  const maxLines = 8;
+  const maxLines = 24;
   const lineHeight = 16;
 
   useEffect(() => {
