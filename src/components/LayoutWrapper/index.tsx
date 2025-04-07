@@ -362,16 +362,6 @@ export default function LayoutWrapper({
                     }
                   />
                 </ModeSwitchBlockInMenuMask>
-                {isScriptLoaded ? (
-                  <GoogleLoginButton
-                    id="mask-google-signin-button"
-                    customStyle={{ marginTop: "20px" }}
-                  />
-                ) : (
-                  <div
-                    style={{ width: "40px", height: "40px", marginTop: "20px" }}
-                  />
-                )}
                 <MdOutlineClose
                   color={theme.text}
                   size={24}
