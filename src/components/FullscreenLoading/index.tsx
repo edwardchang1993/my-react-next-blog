@@ -1,5 +1,3 @@
-"use client";
-
 import { CSSProperties } from "react";
 import { styled } from "styled-components";
 import PacmanLoader from "react-spinners/PacmanLoader";

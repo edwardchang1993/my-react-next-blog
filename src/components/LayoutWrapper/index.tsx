@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect, Suspense } from "react";
 import { styled, ThemeProvider, createGlobalStyle } from "styled-components";
 import { ApolloProvider } from "@apollo/client";

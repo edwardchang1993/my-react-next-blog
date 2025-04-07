@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { styled, useTheme } from "styled-components";
 import { useCurrentEditor } from "@tiptap/react";

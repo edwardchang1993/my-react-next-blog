@@ -1,3 +1,5 @@
+"use client";
+
 import ButtonDialog from "./ButtonDialog";
 import EditionDate from "./EditionDate";
 import EditionName from "./EditionName";
