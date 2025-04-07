@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { styled, useTheme } from "styled-components";
 import { IoClose } from "react-icons/io5";
-import SubmitButton from "@/components/SubmitButton";
+import { SubmitButton } from "@/components";
 import type { ThemeAttributesType } from "@/types/theme";
 import type { DialogPropsTypes } from "./types";
 

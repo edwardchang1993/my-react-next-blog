@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
 import { styled, useTheme } from "styled-components";
 import { useCurrentEditor } from "@tiptap/react";
-import ButtonDialog from "@/components/ButtonDialog";
+import { ButtonDialog } from "@/components";
 import { MENU_BUTTON_CONFIG_LIST } from "./constants";
 import { NodeSelection } from "prosemirror-state";
 import toast from "react-hot-toast";

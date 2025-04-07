@@ -16,7 +16,7 @@ import spaceXClient from "@/apollo/clients/spaceX";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
 import { LoadingProvider } from "@/context/LoadingContext";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import FullScreenLoading from "@/components/FullscreenLoading";
+import { FullscreenLoading } from "@/components";
 import GoogleLoginButton from "./components/GoogleLoginButton";
 import { THEME } from "@/constants/theme";
 import { WRAPPER_BANNER_NAVIGATE_ITEM_LIST } from "@/constants/wrapper";
@@ -386,7 +386,7 @@ export default function LayoutWrapper({
               </Footer>
             </Wrapper>
             <Toaster />
-            <FullScreenLoading />
+            <FullscreenLoading />
           </Suspense>
         </ApolloProvider>
       </LoadingProvider>

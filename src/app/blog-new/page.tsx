@@ -3,24 +3,21 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import toast from "react-hot-toast";
 import { styled, useTheme } from "styled-components";
 import { collection, addDoc } from "firebase/firestore";
-import toast from "react-hot-toast";
 import { db } from "@/sdk/firebase";
 import { useGoogleAuth } from "@/context/GoogleAuthContext";
-// import { useLoading } from "@/context/LoadingContext";
-// import EditionTagList from "@/components/EditionTagList";
-import TiptapContentEditor from "@/components/TiptapContentEditor";
-import SubmitButton from "@/components/SubmitButton";
-import Title from "@/components/Title";
-import SubTitle from "@/components/SubTitle";
+import {
+  TiptapContentEditor,
+  SubmitButton,
+  Title,
+  SubTitle,
+} from "@/components";
 import type { ThemeAttributesType } from "@/types/theme";
 import type {
-  // EditionDataType,
   EditionDataEditionContentType,
   EditionDataEditionNameType,
-  // EditionDataEditionTagType,
-  // EditionDataEditionTagListType,
 } from "@/types/editor";
 import { DEFAULT_EDITOR_CONTENT } from "@/constants/editor";
 
@@ -60,31 +57,15 @@ export default function NewAEditionPage() {
   const theme = useTheme();
   const router = useRouter();
   const { isAdmin } = useGoogleAuth();
-  // const { setIsLoading } = useLoading();
 
   const [editorContent, setEditorContent] =
     useState<EditionDataEditionContentType>(DEFAULT_EDITOR_CONTENT);
   const [editionName, setEditionName] =
     useState<EditionDataEditionNameType>("");
-  // const [editionTagList, setEditionTagList] =
-  //   useState<EditionDataEditionTagListType>([]);
-  // const [newEditionTagName, setNewEditionTagName] =
-  //   useState<EditionDataEditionTagType>("");
 
   function handleUpdateEditionName(e: React.ChangeEvent<HTMLInputElement>) {
     setEditionName(e.currentTarget.value);
   }
-
-  // function handleUpdateEditionTagName(e: React.ChangeEvent<HTMLInputElement>) {
-  //   setNewEditionTagName(e.currentTarget.value);
-  // }
-
-  // function handleUpdateEditionTag(e: React.KeyboardEvent<HTMLInputElement>) {
-  //   if (e.key === "Enter") {
-  //     setEditionTagList([...editionTagList, newEditionTagName]);
-  //     setNewEditionTagName("");
-  //   }
-  // }
 
   async function submit() {
     if (!editionName) {
@@ -98,18 +79,10 @@ export default function NewAEditionPage() {
     }
 
     try {
-      // setIsLoading(true);
-
-      // if (!editionTagList.length) {
-      //   toast.error("請填入至少一個標籤");
-      //   return;
-      // }
-
       const data = {
         create_timestamp: new Date().getTime(),
         edition_content: editorContent,
         edition_name: editionName,
-        // edition_tag_list: editionTagList,
       };
 
       await addDoc(collection(db, "edition_list"), data);
@@ -121,8 +94,6 @@ export default function NewAEditionPage() {
       console.error(e);
 
       toast.error("新增失敗");
-    } finally {
-      // setIsLoading(false);
     }
   }
 
@@ -154,25 +125,6 @@ export default function NewAEditionPage() {
           editorContent={editorContent}
           setEditorContent={setEditorContent}
         />
-        {/* <SubTitle>
-          {" "}
-          <img
-            src="https://pic.sopili.net/pub/emoji/twitter/2/72x72/1f538.png"
-            width={20}
-            height={20}
-          />
-          &thinsp;Tags
-        </SubTitle>
-        <NewEditionInput
-          $theme={theme}
-          type="text"
-          value={newEditionTagName}
-          onInput={handleUpdateEditionTagName}
-          onKeyDown={handleUpdateEditionTag}
-        /> */}
-        {/* <div style={{ marginTop: "16px" }}>
-          <EditionTagList editionTagList={editionTagList} />
-        </div> */}
         <NewEditionTiptapFooter>
           <SubmitButton label="送出" onClick={submit} />
         </NewEditionTiptapFooter>

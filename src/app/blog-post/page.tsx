@@ -4,10 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
-import EditionDate from "@/components/EditionDate";
-import EditionName from "@/components/EditionName";
-import EditionContentPreview from "@/components/EditorContentPreview";
-// import EditionTagList from "@/components/EditionTagList";
+import { EditionDate, EditionName, EditorContentPreview } from "@/components";
 import type {
   EditionDataType,
   FirestoreCollectionIdType,
@@ -49,11 +46,10 @@ export default function SingleEditionPage() {
     <Suspense fallback={<div>Loading...</div>}>
       <EditionDate timestamp={editionData.create_timestamp} />
       <EditionName editionName={editionData.edition_name} />
-      <EditionContentPreview
+      <EditorContentPreview
         editionContent={editionData.edition_content}
         hasReadMore={false}
       />
-      {/* <EditionTagList editionTagList={editionData.edition_tag_list} /> */}
     </Suspense>
   );
 }

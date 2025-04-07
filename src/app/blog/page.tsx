@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/sdk/firebase";
 import { styled, useTheme } from "styled-components";
-// import { useLoading } from "@/context/LoadingContext";
-import EditionDate from "@/components/EditionDate";
-import EditionName from "@/components/EditionName";
-import EditionContentPreview from "@/components/EditorContentPreview";
-// import EditionTagList from "@/components/EditionTagList";
-import Title from "@/components/Title";
+import {
+  EditionDate,
+  EditionName,
+  EditorContentPreview,
+  Title,
+} from "@/components";
 import type { ThemeAttributesType } from "@/types/theme";
 import type {
   EditionDataType,
@@ -26,7 +26,6 @@ const BlogEditionItem = styled.div<{ $theme: ThemeAttributesType }>`
 export default function BlogPage() {
   const router = useRouter();
   const theme = useTheme();
-  // const { isLoading, setIsLoading } = useLoading();
 
   const [isFetchingBlogs, setIsFetchingBlogs] = useState<boolean>(false);
   const [editionList, setEditionList] = useState<EditionDataType[]>([]);
@@ -35,8 +34,6 @@ export default function BlogPage() {
     if (isFetchingBlogs) {
       return;
     }
-
-    // setIsLoading(true);
 
     await getDocs(collection(db, "edition_list")).then((querySnapshot) => {
       const newData = querySnapshot.docs.map((doc) => ({
@@ -48,7 +45,6 @@ export default function BlogPage() {
     });
 
     setIsFetchingBlogs(true);
-    // setIsLoading(false);
   }
 
   function redirectToEdition(id: FirestoreCollectionIdType) {
@@ -74,12 +70,11 @@ export default function BlogPage() {
               editionName={edition.edition_name}
               redirectToEdition={() => redirectToEdition(edition.id)}
             />
-            <EditionContentPreview
+            <EditorContentPreview
               editionContent={edition.edition_content}
               hasReadMore={true}
               redirectToEdition={() => redirectToEdition(edition.id)}
             />
-            {/* <EditionTagList editionTagList={edition.edition_tag_list} /> */}
           </BlogEditionItem>
         );
       })}

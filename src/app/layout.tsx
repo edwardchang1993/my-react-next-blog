@@ -1,9 +1,9 @@
 import "@/assets/styles/globals.scss";
 import "@/assets/styles/tiptap.scss";
 import { Varela_Round } from "next/font/google";
-import StyledComponentsRegistry from "@/components/StyledComponentsRegistry";
+import { StyledComponentsRegistry } from "@/components";
 import { GoogleAuthProvider } from "@/context/GoogleAuthContext";
-import LayoutWrapper from "@/components/LayoutWrapper/index";
+import { LayoutWrapper } from "@/components";
 
 export const metadata = {
   title: "Edward Chang's Blog",

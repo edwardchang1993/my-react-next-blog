@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import { styled, useTheme } from "styled-components";
 import { EditorContent, useEditor } from "@tiptap/react";
