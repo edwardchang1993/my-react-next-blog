@@ -40,11 +40,16 @@ export function GoogleAuthProvider({ children }: { children: ReactNode }) {
     script.onload = () => {
       const clientId = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID as string;
 
+      const adminGmail = process.env.NEXT_PUBLIC_ADMIN_GMAIL as string;
+
       const callback = (response: GoogleLoginCallbackParamType) => {
         const decoded = jwtDecode(
           response.credential
         ) as GoogleLoginCredentialJWTDecodedType;
-        setIsAdmin(decoded.email === "s2995510@gmail.com");
+
+        const isAdmin = decoded.email === adminGmail;
+
+        setIsAdmin(isAdmin);
       };
 
       if (window.google) {
