@@ -3,10 +3,10 @@ export const WRAPPER_BANNER_NAVIGATE_ITEM_LIST = [
     label: "Blog",
     path: "blog",
   },
-  {
-    label: "Practice",
-    path: "practice",
-  },
+  // {
+  //   label: "Practice",
+  //   path: "practice",
+  // },
   {
     label: "About",
     path: "about",
